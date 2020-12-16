@@ -39,4 +39,4 @@ export default App;
 ```
 
 - 모든 Component는 render function을 가짐
-  - render는 해당 Component가 무엇을 보여주는 것이라고 생각
+  - render는 해당 Component가 무엇을 보여주는 것이라고 생각하자
