@@ -1,0 +1,31 @@
+# 4. Component Lifecycle & State
+
+## 4.1 Component Lifecycle
+
+- Component는 여러 기능들을 정해진 순서대로 실행
+
+- Component 초기 생성시
+
+  - 초기 랜더링 시 필요한 데이터를 끌어오는 로직을 사용할 경우
+  - `constructor()`  > `render()` > `componentDidMount()`
+
+  | <center>메서드</center> | <center>설명</center>                                        |
+  | ----------------------- | ------------------------------------------------------------ |
+  | `constructor()`         | Component 생성, 기본 state 정의 가능                         |
+  | `render()`              | Component 랜더링을 담당                                      |
+  | `componentDidMount()`   | Component 출력물이 DOM에 랜더링 된 후 실행, `setTimeout()`나 aJax 호출 |
+
+- Component 업데이트 시
+
+  - props의 변화, state의 변화에 따라 Component 가 업데이트되는 로직이 필요할 경우
+  - `static getDerivedStateFromProps()` > `shouldComponentUpdate()` > `getSnapshotBeforeUpdate()` > `render()` > `componentDidMount()`
+
+  | <center>메서드</center>                                 | <center>설명</center>                                        |
+  | ------------------------------------------------------- | ------------------------------------------------------------ |
+  | `static getDerivedStateFromProps(nextProps, prevProps)` | 특정 props가 바뀔 때 설정하려는 state를 객체 형태로 리턴하는 방식으로 사용 |
+  | `shouldComponentUpdate(nextProps, nextState)`           | props, state 값이 볂기 직전에 호출                           |
+  | `render()`                                              | Component 랜더링을 담당                                      |
+  | `getSnapshotBeforeUpdate(prevProps, prevState)`         | DOM 변화 직전의 실제 DOM 정보를 가져옴                       |
+  | `componentDidMount(prevProps, prevState, snapshot)`     | 이 메서드의 실행 시점에 prop과 state가 바뀜, snapshot 파라미터를 이용해서 이전 prevProps와 prevState 값을 받아와 이용 가능 |
+
+  
