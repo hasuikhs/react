@@ -18,7 +18,7 @@
 - Component 업데이트 시
 
   - props의 변화, state의 변화에 따라 Component 가 업데이트되는 로직이 필요할 경우
-  - `static getDerivedStateFromProps()` > `shouldComponentUpdate()` > `getSnapshotBeforeUpdate()` > `render()` > `componentDidMount()`
+  - `static getDerivedStateFromProps()` > `shouldComponentUpdate()` > `render()` > `getSnapshotBeforeUpdate()` > `componentDidMount()`
 
   | <center>메서드</center>                                 | <center>설명</center>                                        |
   | ------------------------------------------------------- | ------------------------------------------------------------ |
