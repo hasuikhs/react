@@ -28,4 +28,72 @@
   | `getSnapshotBeforeUpdate(prevProps, prevState)`         | DOM 변화 직전의 실제 DOM 정보를 가져옴                       |
   | `componentDidMount(prevProps, prevState, snapshot)`     | 이 메서드의 실행 시점에 prop과 state가 바뀜, snapshot 파라미터를 이용해서 이전 prevProps와 prevState 값을 받아와 이용 가능 |
 
-  
+
+## 4.2 State
+
+- 기존의 코드
+
+  ```react
+  const movies = [
+      {
+          title: 'movie 1',
+          poster: 'movie poster url 1'
+      },
+      ...
+  ];
+      
+  class App extends Component {
+  	render() {
+          return (
+          	<div className="App">
+              	{movies.map((movie, index) => {
+                      <Movie title={movie.title} poster={movie.poster} key={index} />
+                  })}
+              </div>
+          );
+      }    
+  }
+  ```
+
+- state 사용
+
+  ```react
+  class App extends Component {
+      
+      state = {
+          movies: {
+              title: 'movie 1',
+          	poster: 'movie poster url 1'
+          },
+          ...
+      };
+          
+      componentDidMount() {
+          setTimeout(() => {
+              this.setState({
+                  movies: [
+                      ...this.state.movies,
+                      {
+                          title: 'movie 4',
+                          poster: 'movie posterurl 4'
+                      }
+                  ];
+              });
+          }, 1000);
+      }; 
+      
+  	render() {
+          return (
+          	<div className="App">
+              	{this.state.movies.map((movie, index) => {
+                      <Movie title={movie.title} poster={movie.poster} key={index} />
+                  })}
+              </div>
+          );
+      };    
+  }
+  ```
+
+  - 이제 더이상 `render()` 함수에서 movies는 찾을 수 없으므로 this.state.movies로 변경
+  - `componentDidMount()`를 사용하여 render 후에 일어날 상황 추가
+
