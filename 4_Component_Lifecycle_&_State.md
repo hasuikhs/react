@@ -97,3 +97,46 @@
   - 이제 더이상 `render()` 함수에서 movies는 찾을 수 없으므로 this.state.movies로 변경
   - `componentDidMount()`를 사용하여 render 후에 일어날 상황 추가
 
+- Loading State
+
+  - 처음부터 데이터가 존재하지 않으므로 처음 스피너나 Loading 문구 등을 넣을 수 있음
+
+  ```react
+  class App extends Component {
+      
+      state = {};
+  
+  	componentDidMount() {
+          setTimeout(() => {
+              this.setState({
+                  movies: [
+                      {
+                          title: 'Movie 1',
+                          poster: 'Movie Posterurl 1'
+                      },
+                      ...
+                  ]
+              });
+          });
+      }
+       
+      // 사용자 함수
+      _renderMovies = () => {
+          const movies = this.state.movies.map((movie, index) => {
+              return <Movie title={movie.title} poster={movie.poster} key={inex} />
+          });
+          return movies;
+      }
+                     
+      render() {
+          return {
+              <div className="App">
+                  <!-- state에 movies가 존재하면 render 없으면 Loading -->
+              	{this.state.movies ? this._renderMovies() : 'Loading'}
+              </div>
+          }
+      }
+  }
+  ```
+
+  
