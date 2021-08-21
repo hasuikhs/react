@@ -7,6 +7,12 @@
   pointer-events: none;
 }
 
+.modal {
+  margin-top: 20px;
+  padding: 20px;
+  background: #EEE;
+}
+
 .black-nav {
   background: black;
   width: 100%;
