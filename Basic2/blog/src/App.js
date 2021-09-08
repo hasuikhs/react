@@ -36,7 +36,7 @@ function App() {
 
   const renderMovies = movies.map(movie => {
     return (
-      <MovieCard key={ movie['id'] } title={ movie['title'] } year={ movie['year'] } />
+      <MovieCard key={ movie['id'] } movie={ movie } />
     );
   });
 
@@ -71,11 +71,11 @@ function App() {
   );
 }
 
-function MovieCard(props) {
+function MovieCard({ movie }) {
   return (
     <div className="movie">
-      <div className="movie-title">{ props['title'] }</div>
-      <div className="movie-year">{ props['year'] }</div>
+      <div className="movie-title">{ movie['title'] }</div>
+      <div className="movie-year">{ movie['year'] }</div>
     </div>
   );
 };

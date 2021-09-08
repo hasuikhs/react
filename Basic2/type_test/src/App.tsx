@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Counter from './components/Counter';
 
+interface MovieProps {
+  id: number;
+  title: string;
+  year: number;
+}
+
 export default function App() {
 
   const [username, setUsername] = useState<string|''>('');
@@ -27,7 +33,7 @@ export default function App() {
 
   const renderCondition: string = condition ? 'True' : 'False'
 
-  const movies: { id: number, title: string, year: number }[] = [
+  const movies: MovieProps[] = [
     { id:1, title: 'movie1', year: 2018 },
     { id:2, title: 'movie2', year: 2019 },
     { id:3, title: 'movie3', year: 2020 },
@@ -35,7 +41,7 @@ export default function App() {
   ];
   const renderMovies: JSX.Element[] = movies.map(movie => {
     return (
-      <MovieCard key={ movie['id'] } title={ movie['title'] } year={ movie['year'] } />
+      <MovieCard key={ movie['id'] } movie={ movie } />
     );
   });
 
@@ -70,16 +76,11 @@ export default function App() {
   );
 }
 
-interface MovieProps {
-  title:string;
-  year:number;
-}
-
-function MovieCard(props: MovieProps) {
+function MovieCard({ movie }: any) {
   return (
     <div className="movie">
-      <div className="movie-title">{ props['title'] }</div>
-      <div className="movie-year">{ props['year'] }</div>
+      <div className="movie-title">{ movie['title'] }</div>
+      <div className="movie-year">{ movie['year'] }</div>
     </div>
   );
 };
