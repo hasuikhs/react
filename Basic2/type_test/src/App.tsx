@@ -41,7 +41,7 @@ export default function App() {
   ];
   const renderMovies: JSX.Element[] = movies.map(movie => {
     return (
-      <MovieCard key={ movie['id'] } movie={ movie } />
+      <MovieCard key={ movie['id'] } { ...movie } />
     );
   });
 
@@ -76,11 +76,11 @@ export default function App() {
   );
 }
 
-function MovieCard({ movie }: any) {
+function MovieCard({ title, year }: MovieProps) {
   return (
     <div className="movie">
-      <div className="movie-title">{ movie['title'] }</div>
-      <div className="movie-year">{ movie['year'] }</div>
+      <div className="movie-title">{ title }</div>
+      <div className="movie-year">{ year }</div>
     </div>
   );
 };
