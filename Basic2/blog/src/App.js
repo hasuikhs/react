@@ -27,18 +27,36 @@ function App() {
 
   const renderCondition = condition ? 'True' : 'False'
 
-  const movies = [
+  const [movieTitle, setMovieTitle] = useState('');
+  const [movieYear, setMovieYear] = useState('');
+  const [movies, setMovies] = useState([
     { id:1, title: 'movie1', year: 2018 },
     { id:2, title: 'movie2', year: 2019 },
     { id:3, title: 'movie3', year: 2020 },
     { id:4, title: 'movie4', year: 2021 },
-  ];
+  ]);
+
+  useEffect(() => {
+
+  })
 
   const renderMovies = movies.map(movie => {
     return (
       <MovieCard key={ movie['id'] } movie={ movie } />
     );
   });
+
+  const addMovie = (event) => {
+    event.preventDefault();
+    setMovies([
+      ...movies, 
+      {
+        id: movies.length + 1,
+        title: movieTitle,
+        year: movieYear
+      }
+    ]);
+  };
 
   return (
     <div className="App">
@@ -66,6 +84,21 @@ function App() {
       </div>
       <button onClick={ toggle }>Toggle</button>
       <h1>Movie List</h1>
+      <form onSubmit={ addMovie }>
+        <input
+          type="text"
+          value={ movieTitle }
+          placeholder="영화제목"
+          onChange={e => setMovieTitle(e.target.value)}
+        /><br/>
+        <input
+          type="text"
+          value={ movieYear }
+          placeholder="개봉연도"
+          onChange={e => setMovieYear(e.target.value)}
+        />
+        <button type="submit">영화 추가</button>
+      </form> 
       { renderMovies }
     </div>
   );
