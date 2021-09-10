@@ -36,10 +36,6 @@ function App() {
     { id:4, title: 'movie4', year: 2021 },
   ]);
 
-  useEffect(() => {
-
-  })
-
   const renderMovies = movies.map(movie => {
     return (
       <MovieCard key={ movie['id'] } movie={ movie } />
@@ -48,6 +44,18 @@ function App() {
 
   const addMovie = (event) => {
     event.preventDefault();
+    if (!movieTitle) {
+      alert('제목을 입력해주세요.');
+      return;
+    }
+    if (!movieYear) {
+      alert('개봉연도를 입력해주세요.');
+      return;
+    }
+    if (isNaN(Number(movieYear))) {
+      alert('개봉연도는 숫자여야합니다.');
+      return;
+    }
     setMovies([
       ...movies, 
       {
@@ -56,6 +64,8 @@ function App() {
         year: movieYear
       }
     ]);
+    setMovieTitle('');
+    setMovieYear('');
   };
 
   return (
@@ -84,20 +94,22 @@ function App() {
       </div>
       <button onClick={ toggle }>Toggle</button>
       <h1>Movie List</h1>
-      <form onSubmit={ addMovie }>
+      <form className="movie-form" onSubmit={ addMovie }>
         <input
+          className="ml5"
           type="text"
           value={ movieTitle }
           placeholder="영화제목"
           onChange={e => setMovieTitle(e.target.value)}
         /><br/>
         <input
+          className="ml5"
           type="text"
           value={ movieYear }
           placeholder="개봉연도"
           onChange={e => setMovieYear(e.target.value)}
         />
-        <button type="submit">영화 추가</button>
+        <button className="ml5" type="submit">영화 추가</button>
       </form> 
       { renderMovies }
     </div>

@@ -29,3 +29,12 @@ code {
   font-size: 5px;
   color: red;
 }
+
+.movie-form {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.ml5 {
+  margin-left: 5px;
+}
