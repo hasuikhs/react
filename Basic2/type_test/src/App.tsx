@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Counter from './components/Counter';
+import MovieForm from './components/MovieForm';
 
 interface MovieProps {
   id: number;
@@ -33,8 +34,7 @@ export default function App() {
 
   const renderCondition: string = condition ? 'True' : 'False'
 
-  const [movieTitle, setMovieTitle] = useState<string|''>('');
-  const [movieYear, setMovieYear] = useState<string|''>('');
+  
   const [movies, setMovies] = useState<MovieProps[]>([
     { id:1, title: 'movie1', year: 2018 },
     { id:2, title: 'movie2', year: 2019 },
@@ -42,37 +42,18 @@ export default function App() {
     { id:4, title: 'movie4', year: 2021 },
   ]);
 
+  const addMovie = (movie: MovieProps): void => {
+    setMovies([
+      ...movies,
+      movie
+    ]);
+  }
+
   const renderMovies: JSX.Element[] = movies.map(movie => {
     return (
       <MovieCard key={ movie['id'] } { ...movie } />
     );
   });
-
-  const addMovie = (event: any) => {
-    event.preventDefault();
-    if (!movieTitle) {
-      alert('제목을 입력해주세요.');
-      return;
-    }
-    if (!movieYear) {
-      alert('개봉연도를 입력해주세요.');
-      return;
-    }
-    if (isNaN(Number(movieYear))) {
-      alert('개봉연도는 숫자여야합니다.');
-      return;
-    }
-    setMovies([
-      ...movies,
-      {
-        id: movies.length + 1,
-        title: movieTitle,
-        year: movieYear
-      }
-    ]);
-    setMovieTitle('');
-    setMovieYear('');
-  }
 
   return (
     <div className="App">
@@ -100,23 +81,7 @@ export default function App() {
       </div>
       <button onClick={ toggle }>Toggle</button>
       <h1>Movie List</h1>
-      <form className="movie-form" onSubmit={ addMovie }>
-        <input
-          className="ml5"
-          type="text"
-          value={ movieTitle }
-          placeholder="영화제목"
-          onChange={e => setMovieTitle(e.target.value)}
-        /><br/>
-        <input
-          className="ml5"
-          type="text"
-          value={ movieYear }
-          placeholder="개봉연도"
-          onChange={e => setMovieYear(e.target.value)}
-        />
-        <button className="ml5" type="submit">영화 추가</button>
-      </form>
+      <MovieForm addMovie={ addMovie } movieId={ movies.length } />
       { renderMovies }
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Counter from './components/Counter';
+import MovieForm from './components/MovieForm';
 
 function App() {
 
@@ -27,8 +28,6 @@ function App() {
 
   const renderCondition = condition ? 'True' : 'False'
 
-  const [movieTitle, setMovieTitle] = useState('');
-  const [movieYear, setMovieYear] = useState('');
   const [movies, setMovies] = useState([
     { id:1, title: 'movie1', year: 2018 },
     { id:2, title: 'movie2', year: 2019 },
@@ -36,37 +35,18 @@ function App() {
     { id:4, title: 'movie4', year: 2021 },
   ]);
 
+  const addMovie = (movie) => {
+    setMovies([
+      ...movies,
+      movie
+    ]);
+  }
+
   const renderMovies = movies.map(movie => {
     return (
-      <MovieCard key={ movie['id'] } movie={ movie } />
+      <MovieCard key={ movie['id'] } { ...movie } />
     );
   });
-
-  const addMovie = (event) => {
-    event.preventDefault();
-    if (!movieTitle) {
-      alert('제목을 입력해주세요.');
-      return;
-    }
-    if (!movieYear) {
-      alert('개봉연도를 입력해주세요.');
-      return;
-    }
-    if (isNaN(Number(movieYear))) {
-      alert('개봉연도는 숫자여야합니다.');
-      return;
-    }
-    setMovies([
-      ...movies, 
-      {
-        id: movies.length + 1,
-        title: movieTitle,
-        year: movieYear
-      }
-    ]);
-    setMovieTitle('');
-    setMovieYear('');
-  };
 
   return (
     <div className="App">
@@ -94,33 +74,17 @@ function App() {
       </div>
       <button onClick={ toggle }>Toggle</button>
       <h1>Movie List</h1>
-      <form className="movie-form" onSubmit={ addMovie }>
-        <input
-          className="ml5"
-          type="text"
-          value={ movieTitle }
-          placeholder="영화제목"
-          onChange={e => setMovieTitle(e.target.value)}
-        /><br/>
-        <input
-          className="ml5"
-          type="text"
-          value={ movieYear }
-          placeholder="개봉연도"
-          onChange={e => setMovieYear(e.target.value)}
-        />
-        <button className="ml5" type="submit">영화 추가</button>
-      </form> 
+      <MovieForm addMovie={ addMovie } movieId={ movies.length } />
       { renderMovies }
     </div>
   );
 }
 
-function MovieCard({ movie }) {
+function MovieCard({ title, year }) {
   return (
     <div className="movie">
-      <div className="movie-title">{ movie['title'] }</div>
-      <div className="movie-year">{ movie['year'] }</div>
+      <div className="movie-title">{ title }</div>
+      <div className="movie-year">{ year }</div>
     </div>
   );
 };
