@@ -6,6 +6,7 @@ interface MovieProps {
   id: number;
   title: string;
   year: string|number;
+  removeMovie: Function;
 }
 
 export default function App() {
@@ -34,13 +35,7 @@ export default function App() {
 
   const renderCondition: string = condition ? 'True' : 'False'
 
-  
-  const [movies, setMovies] = useState<MovieProps[]>([
-    { id:1, title: 'movie1', year: 2018 },
-    { id:2, title: 'movie2', year: 2019 },
-    { id:3, title: 'movie3', year: 2020 },
-    { id:4, title: 'movie4', year: 2021 },
-  ]);
+  const [movies, setMovies] = useState<MovieProps[]>([]);
 
   const addMovie = (movie: MovieProps): void => {
     setMovies([
@@ -49,11 +44,15 @@ export default function App() {
     ]);
   }
 
-  const renderMovies: JSX.Element[] = movies.map(movie => {
+  const removeMovie = (id: number): void => {
+    setMovies(movies.filter((item: MovieProps) => item['id'] !== id));
+  }
+
+  const renderMovies: JSX.Element[]|string = movies.length ?  movies.map(movie => {
     return (
-      <MovieCard key={ movie['id'] } { ...movie } />
+      <MovieCard key={ movie['id'] } { ...movie } removeMovie={ removeMovie }/>
     );
-  });
+  }) : '추가된 영화가 없습니다.';
 
   return (
     <div className="App">
@@ -87,11 +86,15 @@ export default function App() {
   );
 }
 
-function MovieCard({ title, year }: MovieProps) {
+function MovieCard({ id, title, year, removeMovie }: MovieProps) {
   return (
     <div className="movie">
-      <div className="movie-title">{ title }</div>
-      <div className="movie-year">{ year }</div>
+      <div className="movie-title">{ title }
+        <div className="movie-year">({ year })</div>
+      </div>
+      <div>
+        <button onClick={ () => removeMovie(id) }>삭제</button>
+      </div>
     </div>
   );
 };
