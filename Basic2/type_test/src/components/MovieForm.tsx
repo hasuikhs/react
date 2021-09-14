@@ -4,32 +4,46 @@ export default function MovieForm({ addMovie, movieId }: {addMovie: Function, mo
 
     const [movieTitle, setMovieTitle] = useState<string | ''>('');
     const [movieYear, setMovieYear] = useState<string | ''>('');
+    const [titleError, setTitleError] = useState<string>('');
+    const [yearError, setYearError] = useState<string>('');
 
     const resetForm = (): void => {
         setMovieTitle('');
         setMovieYear('');
     }
 
-    const onSubmit = (event: any): void => {
-        event.preventDefault();
+    const validateForm = (): boolean => {
+        resetErrors();
+        let validated = true;
+
         if (!movieTitle) {
-            alert('제목을 입력해주세요.');
-            return;
+            setTitleError('영화제목을 입력하세요.');
+            validated = false;
         }
         if (!movieYear) {
-            alert('개봉연도를 입력해주세요.');
-            return;
+            setYearError('개봉년도를 입력하세요.');
+            validated = false;
         }
-        if (isNaN(Number(movieYear))) {
-            alert('개봉연도는 숫자여야합니다.');
-            return;
+
+        return validated;
+    }
+
+    const resetErrors = (): void => {
+        setTitleError('');
+        setYearError('');
+    }
+
+    const onSubmit = (event: any): void => {
+        event.preventDefault();
+        if (validateForm()) {
+            addMovie({
+                id: movieId + 1,
+                title: movieTitle,
+                year: movieYear
+            });
+            resetErrors();
+            resetForm();
         }
-        addMovie({
-            id: movieId + 1,
-            title: movieTitle,
-            year: movieYear
-        });
-        resetForm();
     };
 
     return (
@@ -40,14 +54,16 @@ export default function MovieForm({ addMovie, movieId }: {addMovie: Function, mo
                 value={movieTitle}
                 placeholder="영화제목"
                 onChange={e => setMovieTitle(e.target.value)}
-            /><br />
+            /><br/>
+            <div style={ { color: 'red' } }>{ titleError }</div>
             <input
                 className="ml5"
-                type="text"
+                type="number"
                 value={movieYear}
                 placeholder="개봉연도"
                 onChange={e => setMovieYear(e.target.value)}
-            />
+            /><br />
+            <div style={ { color: 'red' } }>{ yearError }</div>
             <button className="ml5" type="submit">영화 추가</button>
         </form>
     );
