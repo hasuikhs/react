@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InputField from './InputFileld';
 
 export default function MovieForm({ addMovie, movieId }) {
   
@@ -49,22 +50,8 @@ export default function MovieForm({ addMovie, movieId }) {
 
   return (
       <form className="movie-form" onSubmit={ onSubmit }>
-        <input
-          className="ml5"
-          type="text"
-          value={ movieTitle }
-          placeholder="영화제목"
-          onChange={e => setMovieTitle(e.target.value)}
-        /><br/>
-        <div style={ { color: 'red' } }>{ titleError }</div>
-        <input
-          className="ml5"
-          type="number"
-          value={ movieYear }
-          placeholder="개봉연도"
-          onChange={e => setMovieYear(e.target.value)}
-        /><br />
-        <div style={ { color: 'red' } }>{ yearError }</div>
+        <InputField type="text" value={ movieTitle } placeholder={ '영화제목' } onChange={ e => setMovieTitle(e.target.value) } errorMessage={ titleError } />
+        <InputField type="number" value={ movieYear } placeholder={ '개봉년도' } onChange={ e => setMovieYear(e.target.value) } errorMessage={ yearError } />
         <button className="ml5" type="submit">영화 추가</button>
       </form> 
   )
