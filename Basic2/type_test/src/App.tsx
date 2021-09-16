@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Counter from './components/Counter';
 import MovieForm from './components/MovieForm';
+import Navbar from './components/Navbar';
 
 interface MovieProps {
   id: number;
@@ -56,6 +57,7 @@ export default function App() {
 
   return (
     <div className="App">
+      <Navbar />
       <form onSubmit={ onSubmit }>
         <input 
           placeholder="Username" 
