@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Counter from './components/Counter';
 import MovieForm from './components/MovieForm';
 import Navbar from './components/Navbar';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [condition, setCondition] = useState(false);
-  
+
   const onSubmit = (event) => {
     event.preventDefault();
     alert('submitted');
@@ -44,51 +45,63 @@ function App() {
 
   const renderMovies = movies.length ? movies.map(movie => {
     return (
-      <MovieCard key={ movie['id'] } { ...movie } removeMovie={ removeMovie }/>
+      <MovieCard key={movie['id']} {...movie} removeMovie={removeMovie} />
     );
   }) : '추가된 영화가 없습니다.';
 
   return (
-    <div className="App">
-      <Navbar />
-      <form onSubmit={ onSubmit }>
-        <input 
-          placeholder="Username" 
-          value={ username } 
-          onChange={ (e) => setUsername(e.target.value) }
-        /><br/>
-        <input 
-          // type="password"
-          placeholder="Password" 
-          value={ password } 
-          onChange={ (e) => setPassword(e.target.value) }
-        /><br/>
-        <button type="submit">Submit</button>
-      </form>
-      <Counter click="Click1"/>
-      <Counter click={ username }/>
-      <Counter />
-      <br/>
-      <br/>
-      <div>
-        { renderCondition }
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Switch>
+          <Route path="/" exact>
+            <h1>Home</h1>
+            <form onSubmit={onSubmit}>
+              <input
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              /><br />
+              <input
+                // type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              /><br />
+              <button type="submit">Submit</button>
+            </form>
+            <Counter click="Click1" />
+            <Counter click={username} />
+            <Counter />
+            <br />
+            <br />
+            <div>
+              {renderCondition}
+            </div>
+            <button onClick={toggle}>Toggle</button>
+          </Route>
+          <Route path="/movies">
+            <h1>Movie List</h1>
+            <MovieForm addMovie={addMovie} movieId={movies.length} />
+            {renderMovies}
+          </Route>
+          <Route path="/users">
+            <h1>Users</h1>
+          </Route>
+        </Switch>
       </div>
-      <button onClick={ toggle }>Toggle</button>
-      <h1>Movie List</h1>
-      <MovieForm addMovie={ addMovie } movieId={ movies.length } />
-      { renderMovies }
-    </div>
+    </Router>
   );
 }
 
 function MovieCard({ id, title, year, removeMovie }) {
   return (
     <div className="movie">
-      <div className="movie-title">{ title }
-        <div className="movie-year">({ year })</div>
+      <div className="movie-title">{title}
+        <div className="movie-year">({year})</div>
       </div>
       <div>
-        <button onClick={ () =>  removeMovie(id) }>삭제</button>
+        <button onClick={() => removeMovie(id)}>삭제</button>
       </div>
     </div>
   );
