@@ -3,10 +3,12 @@ import React from "react";
 export default function UserList({ users }) {
   return (
     <div>
-      { users.map(user => {
+      {users.map(user => {
         return (
-          <div key={ user.id }>
-            { user.name }
+          <div className="card mb-2" key={user.id}>
+            <div className="card-body p-3">
+              {user.name}
+            </div>
           </div>
         )
       })}
