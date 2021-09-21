@@ -9,11 +9,13 @@ export default function App(): JSX.Element {
     <Router>
       <div className="App">
         <Navbar />
-        <Switch>
-          <Route path="/" component={ Home } exact />
-          <Route path="/movies" component={ Movies } />
-          <Route path="/users" component={ Users } />
-        </Switch>
+        <div className="container-fluid">
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/movies" component={Movies} />
+            <Route path="/users" component={Users} />
+          </Switch>
+        </div>
       </div>
     </Router>
   );

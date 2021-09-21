@@ -10,7 +10,7 @@ export default function App() {
     <Router>
       <div className="App">
         <Navbar />
-        <div className="container">
+        <div className="container-fluid">
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/movies" component={Movies} />
