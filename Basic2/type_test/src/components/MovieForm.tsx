@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InputField from './InputField';
 
-export default function MovieForm({ addMovie, movieId }: { addMovie: Function, movieId: number }): JSX.Element {
+function MovieForm({ addMovie, movieId }: { addMovie: Function, movieId: number }): JSX.Element {
 
   const [movieTitle, setMovieTitle] = useState<string | ''>('');
   const [movieYear, setMovieYear] = useState<string | ''>('');
@@ -49,9 +49,11 @@ export default function MovieForm({ addMovie, movieId }: { addMovie: Function, m
 
   return (
     <form className="movie-form" onSubmit={onSubmit}>
-      <InputField type="text" value={ movieTitle } placeholder={ '영화제목' } onChange={ (e:React.ChangeEvent<HTMLInputElement>) => setMovieTitle(e.target.value) } errorMessage={ titleError } />
-      <InputField type="number" value={ movieYear } placeholder={ '개봉년도' } onChange={ (e:React.ChangeEvent<HTMLInputElement>) => setMovieYear(e.target.value) } errorMessage={ yearError } />
+      <InputField type="text" value={movieTitle} placeholder={'영화제목'} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMovieTitle(e.target.value)} errorMessage={titleError} />
+      <InputField type="number" value={movieYear} placeholder={'개봉년도'} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMovieYear(e.target.value)} errorMessage={yearError} />
       <button className="ml5" type="submit">영화 추가</button>
     </form>
   );
 }
+
+export default MovieForm;

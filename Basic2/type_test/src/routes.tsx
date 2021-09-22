@@ -4,7 +4,12 @@ import Users from './pages/Users';
 import User from './pages/User';
 import Page404 from './pages/404';
 
-const routes = [
+interface RouteType {
+  path?: string;
+  component?: React.ComponentType;
+}
+
+const routes: RouteType[] = [
   {
     path: '/',
     component: Home
@@ -22,7 +27,6 @@ const routes = [
     component: User
   },
   {
-    path: null,
     component: Page404
   }
 ]

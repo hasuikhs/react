@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Counter from '../components/Counter';
 
-export default function Home(): JSX.Element {
+function Home(): JSX.Element {
 
   const [username, setUsername] = useState<string | ''>('');
   const [password, setPassword] = useState<string | ''>('');
@@ -56,3 +56,5 @@ export default function Home(): JSX.Element {
     </>
   );
 }
+
+export default Home;

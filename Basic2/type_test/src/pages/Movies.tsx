@@ -8,7 +8,7 @@ interface MovieProps {
   removeMovie: Function;
 }
 
-export default function Movies(): JSX.Element {
+function Movies(): JSX.Element {
 
   const [movies, setMovies] = useState<MovieProps[]>([]);
 
@@ -50,3 +50,5 @@ function MovieCard({ id, title, year, removeMovie }: MovieProps) {
     </div>
   );
 };
+
+export default Movies;

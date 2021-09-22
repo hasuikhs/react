@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-export default function Navbar(): JSX.Element {
+function Navbar(): JSX.Element {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -14,7 +14,7 @@ export default function Navbar(): JSX.Element {
             <li className="nav-item">
               <NavLink className="nav-link" to="/movies" activeClassName="acitve">Movies</NavLink>
             </li>
-            <li className= "nav-item">
+            <li className="nav-item">
               <NavLink className="nav-link" to="/users" activeClassName="active">Users</NavLink>
             </li>
           </ul>
@@ -23,3 +23,5 @@ export default function Navbar(): JSX.Element {
     </nav>
   );
 }
+
+export default Navbar;
