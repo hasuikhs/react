@@ -1,13 +1,14 @@
-import React from "react";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function UserList({ users }) {
+function UserList({ users }) {
   return (
     <div>
       {users.map(user => {
         return (
           <div className="card mb-2" key={user.id}>
             <div className="card-body p-3">
-              {user.name}
+              <Link to={`/users/${user.id}`}>{user.name}</Link>
             </div>
           </div>
         )
@@ -15,3 +16,5 @@ export default function UserList({ users }) {
     </div>
   );
 }
+
+export default UserList;

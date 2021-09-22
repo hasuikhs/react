@@ -1,23 +1,25 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Movies from './pages/Movis';
-import Users from './pages/Users';
+import routes from './routes';
 
-export default function App() {
+function App() {
   return (
     <Router>
       <div className="App">
         <Navbar />
         <div className="container-fluid">
           <Switch>
-            <Route path="/" component={Home} exact />
-            <Route path="/movies" component={Movies} />
-            <Route path="/users" component={Users} />
+            {routes.map(route => {
+              return (
+                <Route key={route.path} path={route.path} component={route.component} exact />
+              )
+            })}
           </Switch>
         </div>
       </div>
     </Router>
   );
 }
+
+export default App;

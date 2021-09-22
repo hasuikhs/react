@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import Counter from "../components/Counter";
+import React, { useState, useEffect } from 'react';
+import Counter from '../components/Counter';
 
-export default function Home() {
+function Home() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -55,3 +55,5 @@ export default function Home() {
     </>
   );
 }
+
+export default Home;

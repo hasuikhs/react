@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import MovieForm from "../components/MovieForm";
+import React, { useState } from 'react';
+import MovieForm from '../components/MovieForm';
 
-export default function Movies() {
+function Movies() {
 
   const [movies, setMovies] = useState([]);
 
@@ -44,3 +44,5 @@ function MovieCard({ id, title, year, removeMovie }) {
     </div>
   );
 };
+
+export default Movies;

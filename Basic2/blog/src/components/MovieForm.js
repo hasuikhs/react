@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InputField from './InputFileld';
 
-export default function MovieForm({ addMovie, movieId }) {
+function MovieForm({ addMovie, movieId }) {
   
   const [movieTitle, setMovieTitle] = useState('');
   const [movieYear, setMovieYear] = useState('');
@@ -56,3 +56,5 @@ export default function MovieForm({ addMovie, movieId }) {
       </form> 
   )
 }
+
+export default MovieForm;

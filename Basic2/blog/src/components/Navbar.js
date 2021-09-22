@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-export default function Navbar() {
+function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
@@ -23,3 +23,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
+export default Navbar;

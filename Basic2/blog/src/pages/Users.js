@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import UserList from "../components/UserList";
-import Spinner from "../components/Spinner";
+import UserList from '../components/UserList';
+import Spinner from '../components/Spinner';
 
-export default function Users() {
+function Users() {
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -24,3 +24,5 @@ export default function Users() {
     </>
   );
 }
+
+export default Users;

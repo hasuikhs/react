@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-export default function InputField({ type, value, placeholder, onChange, errorMessage }) {
+function InputField({ type, value, placeholder, onChange, errorMessage }) {
   return (
     <>
       <input
@@ -14,3 +14,5 @@ export default function InputField({ type, value, placeholder, onChange, errorMe
     </>
   );
 }
+
+export default InputField;
