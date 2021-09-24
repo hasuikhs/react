@@ -6,12 +6,7 @@ const Users = lazy(() => import('./pages/Users'));
 const User = lazy(() => import('./pages/User'));
 const NotFound = lazy(() => import('./pages/404'));
 
-interface RouteType {
-  path?: string;
-  component?: React.ComponentType;
-}
-
-const routes: RouteType[] = [
+const routes = [
   {
     path: '/',
     component: Home
@@ -29,8 +24,9 @@ const routes: RouteType[] = [
     component: User
   },
   {
+    path: null,
     component: NotFound
   }
-]
+];
 
 export default routes;

@@ -1,14 +1,7 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-const Home = lazy(() => import('./pages/Home'));
-const Movies = lazy(() => import('./pages/Movies'));
-const Users = lazy(() => import('./pages/Users'));
-const User = lazy(() => import('./pages/User'));
-const NotFound = lazy(() => import('./pages/404'))
-
-
+import routes from './routes';
 
 function App() {
   return (
@@ -18,12 +11,11 @@ function App() {
         <div className="container-fluid">
           <Suspense fallback={<div>Loading Page...</div>}>
             <Switch>
-              <Route path="/" component={Home} exact />
-              <Route path="/movies" component={Movies} exact />
-              <Route path="/users" component={Users} exact />
-              <Route path="/users/:id" component={User} exact />
-
-              <Route component={NotFound} exact />
+              {routes.map(route => {
+                return (
+                  <Route key={route.path} path={route.path} component={route.component} exact />
+                );
+              })}
             </Switch>
           </Suspense>
         </div>
