@@ -21,7 +21,6 @@ function Button() {
     </div>
   );
 }
-
 ```
 
 - useState Hook이 반환하는 배열의 두번째 원소 값은 상태값 변경 함수
@@ -87,3 +86,37 @@ function Button() {
 
   - useState 훅은 이전 상태값을 덮어쓰기에 ...state와 같은 코드가 필요
   - 상태값들을 하나의 객체로 관리할 때는 useReducer 훅을 사용하는 것이 추천됨
+
+## 2. useEffect
+
+- 함수 실행 시 함수 외부의 상태를 변경하는 연산을 부수 효과라 하는데, 이 효과는 useEffect에서 처리하는게 추천
+- useEffect Hook에 입력하는 함수를 부수 효과 함수라 함
+  - 이 함수는 렌더링 결과가 실제 돔에 반영된 후 호출되고, 컴포넌트가 사라지기 직전에 마지막으로 호출
+
+```react
+import React, { useState, useEffect } from 'react';
+
+function Button() {
+  const [count, setCount] = useState(0);
+    
+  useEffect(() => {
+    document.title = `클릭수: ${count}`
+  });
+    
+  return (
+    <div>
+      <p>You clicked {count}</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click
+      </button>
+    </div>
+  );
+}
+```
+
+- useEffect의 **두번째 매개변수로 배열(의존성 배열)을 입력**하면, 배열 안의 값이 변경되는 경우에만 함수가 호출
+  - 두번째 매개변수를 입력하지 않을경우: 렌더링 될때마다 실행
+  - 빈배열을 입력할 경우: 최초 한번
+  - 배열안에 state 값을 넣을 경우: 해당 state 값이 변경될때마다 실행
+- useEffect 안에서 사용하는 상태나, props가 있다면 useEffect의 두번째 매개변수에 넣어주어야하는 것이 규칙
+  - 사용하는 값을 넣어주지 않는다면, useEffect 안의 함수가 실행될 때 최신 상태, prop을 가리키지 않음
