@@ -7,6 +7,22 @@
 ## 1. useState
 
 ```react
+const [state, setState] = useState(initialState);
+```
+
+- `initialState` 인자는 초기 렌더링 시에 사용하는 state
+
+  - 최초 실행 이후 렌더링 시에는 이 값은 무시됨
+
+  - 초기 state가 리소스가 많이 든다면, 초기 렌더링 시에만 실행될 함수를 대신 넣을 수 있음
+
+    ```react
+    const [state, setState] = useState(() => {
+      // code 
+    });
+    ```
+
+```react
 import React, { useState } from 'react';
 
 function Button() {
@@ -91,7 +107,7 @@ function Button() {
 
 - 함수 실행 시 함수 외부의 상태를 변경하는 연산을 부수 효과라 하는데, 이 효과는 useEffect에서 처리하는게 추천
 - useEffect Hook에 입력하는 함수를 부수 효과 함수라 함
-  - 이 함수는 렌더링 결과가 실제 돔에 반영된 후 호출되고, 컴포넌트가 사라지기 직전에 마지막으로 호출
+  - 이 함수는 렌더링 결과가 **실제 돔에 반영된 후 호출**되고, 컴포넌트가 사라지기 직전에 마지막으로 호출
 
 ```react
 import React, { useState, useEffect } from 'react';
@@ -114,7 +130,7 @@ function Button() {
 }
 ```
 
-- useEffect의 **두번째 매개변수로 배열(의존성 배열)을 입력**하면, 배열 안의 값이 변경되는 경우에만 함수가 호출
+- useEffect의 **두번째 매개변수로 배열(의존성 배열)을 입력하면, 배열 안의 값이 변경되는 경우에만 함수가 호출**
   - 두번째 매개변수를 입력하지 않을경우: 렌더링 될때마다 실행
   - 빈배열을 입력할 경우: 최초 한번
   - 배열안에 state 값을 넣을 경우: 해당 state 값이 변경될때마다 실행
