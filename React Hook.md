@@ -1,8 +1,15 @@
 # React Hook
 
 - React 16.8부터 React 요소로 새로 추가
-
 - Hook은 함수형 컴포넌트에 기능을 추가할 때 사용하는 함수
+- Hook은 class를 작성하지 않고도 React의 기능들을 사용 가능케 해줌
+
+## 0. 규칙
+
+- **최상위에서만 Hook을 호출**
+  - 반복문, 조건문 혹은 중첩된 함수 내에서 Hook 호출 금지
+- **오직 React 함수 내에서 Hook을 호출**
+  - Hook을 일반적인 JS 함수에서 호출 금지
 
 ## 1. useState
 
@@ -136,3 +143,6 @@ function Button() {
   - 배열안에 state 값을 넣을 경우: 해당 state 값이 변경될때마다 실행
 - useEffect 안에서 사용하는 상태나, props가 있다면 useEffect의 두번째 매개변수에 넣어주어야하는 것이 규칙
   - 사용하는 값을 넣어주지 않는다면, useEffect 안의 함수가 실행될 때 최신 상태, prop을 가리키지 않음
+
+## 3. useContext
+
