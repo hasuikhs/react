@@ -146,3 +146,52 @@ function Button() {
 
 ## 3. useContext
 
+- 기본에 컴포넌트 간에 데이터를 전달하려면 props를 이용해야 했음
+  - props는 부모 자식 관계에서 데이터를 전달
+  - 즉, A, B, C 컴포넌트가 각각 부모자식 관계일 때, A에서 C로 데이터를 주려면 B를 거쳐야 했음
+  - 이 문제를 해결하기 위해서는 보통 Redux를 사용
+
+```react
+import React, { createContext } from 'react';
+
+export const UserContext = createContext('');
+```
+
+```react
+// App.js
+import React, { useState } from 'react';
+import Button from './component/button'
+import { UserContext } from './context/user';
+
+function App() {
+  const [name, setName] = useState('');
+    
+  return (
+  	<>
+      <UserContext.Provider value = {name}>
+      	<Button />
+      </UserContext.Provider>
+    </>
+  );
+}
+```
+
+```react
+// component/button.js
+import { UserContext } from '../context/user';
+
+function Button() {
+  return (
+    <UserContext.Consumer>
+      { name => <p>{`this user name is ${name}`}</p>}
+    </UserContext.Consumer>
+      
+    // ... 
+  );
+}
+```
+
+- 상위 컴포넌트에서 **Provider 컴포넌트**를 이용해서 데이터를 전달
+  - 만약 최상위에 도달할 때까지 Provider 컴포넌트를 찾지 못한다면 기본값 사용
+- 하위 컴포넌트에서 **Consumer 컴포넌트**를 이용해서 데이터를 사용
+  - Provider 컴포넌트의 속성값이 변경되면 하위의 모든 Consumer 컴포넌트는 다시 렌더링 됨
