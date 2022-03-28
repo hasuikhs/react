@@ -152,39 +152,39 @@ function Button() {
   - 이 문제를 해결하기 위해서는 보통 Redux를 사용
 
 ```react
-import React, { createContext } from 'react';
-
-export const UserContext = createContext('');
-```
-
-```react
 // App.js
 import React, { useState } from 'react';
 import Button from './component/button'
-import { UserContext } from './context/user';
+
+const UserContext = createContext('');	// 전역으로 사용할 변수
 
 function App() {
-  const [name, setName] = useState('');
+  const [globalName, setGlobalName] = useState('');
     
   return (
   	<>
-      <UserContext.Provider value = {name}>
+      <UserContext.Provider value = {globalName}>
       	<Button />
       </UserContext.Provider>
     </>
   );
 }
+
+export default App;
+export { UserContext };
 ```
 
 ```react
 // component/button.js
-import { UserContext } from '../context/user';
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../App';
 
 function Button() {
+
+  const globalName = useContext(UserContext);
+
   return (
-    <UserContext.Consumer>
-      { name => <p>{`this user name is ${name}`}</p>}
-    </UserContext.Consumer>
+    <p>{`this globalUser name is ${globalName}`}</p>
       
     // ... 
   );
