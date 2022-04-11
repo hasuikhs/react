@@ -195,3 +195,49 @@ function Button() {
   - 만약 최상위에 도달할 때까지 Provider 컴포넌트를 찾지 못한다면 기본값 사용
 - 하위 컴포넌트에서 **Consumer 컴포넌트**를 이용해서 데이터를 사용
   - Provider 컴포넌트의 속성값이 변경되면 하위의 모든 Consumer 컴포넌트는 다시 렌더링 됨
+
+## 4. useReducer
+
+```react
+const [state, dispatch] = useReducer(reducer, initialArg, init);
+```
+
+- useState의 대체 함수
+- 다수의 하위값을 포함하는 복잡한 정적 로직을 만드는 경우, state가 이전 state에 의존적인 경우 사용
+
+```react
+// 초기화 지연
+// 
+function init(initialCount) {
+  return {count: initialCount};
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return {count: state.count + 1};
+    case 'decrement':
+      return {count: state.count - 1};
+    case 'reset':
+      return init(action.payload);
+    default:
+      throw new Error();
+  }
+}
+
+function Counter({initialCount}) {
+  const [state, dispatch] = useReducer(reducer, initialCount, init);
+  return (
+    <>
+      Count: {state.count}
+      <button
+        onClick={() => dispatch({type: 'reset', payload: initialCount})}>
+        Reset
+      </button>
+      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
+      <button onClick={() => dispatch({type: 'increment'})}>+</button>
+    </>
+  );
+}
+```
+
