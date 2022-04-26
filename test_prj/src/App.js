@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import axios from 'axios';
 
 function App() {
 
@@ -20,7 +21,12 @@ function App() {
       bodyRef.current.focus();
       return;
     }
-    console.log('submit')
+
+    // db 실행 npx json-server --watch db.json --port=3001
+    axios.post('http://localhost:3001/posts', {
+      title: title,
+      body: body
+    })
   }
 
   return (
