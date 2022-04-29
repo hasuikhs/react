@@ -195,8 +195,6 @@ function Button() {
   - 만약 최상위에 도달할 때까지 Provider 컴포넌트를 찾지 못한다면 기본값 사용
 - 하위 컴포넌트에서 **Consumer 컴포넌트**를 이용해서 데이터를 사용
   - Provider 컴포넌트의 속성값이 변경되면 하위의 모든 Consumer 컴포넌트는 다시 렌더링 됨
-<<<<<<< HEAD
-=======
 - `useContext` 사용시 주의 사항
   
   - Provider에 제공한 value가 달라지면 `useContext`를 쓰고 있는 **모든 컴포넌트가 리렌더링**
@@ -204,54 +202,36 @@ function Button() {
     - value 안에는 여러개의 변수가 들어올 수 있는데, 그 중 **하나라도 바뀌면 전체가 리렌더링**됨으로 많은 리소스를 사용하여 렉 유발
     - 자주 바뀌는 것들을 별도의 context로 묶거나, 자식 컴포넌트들을 적절히 분리해야 함
     
->>>>>>> 70122a43344f91a00d5686d555be8a786eee2b2a
-
 ## 4. useReducer
 
 ```react
 const [state, dispatch] = useReducer(reducer, initialArg, init);
 ```
 
-<<<<<<< HEAD
 - useState의 대체 함수
 - 다수의 하위값을 포함하는 복잡한 정적 로직을 만드는 경우, state가 이전 state에 의존적인 경우 사용
+- `useState`와 비슷하지만 컴포넌트의 상태 업데이트 로직을 컴포넌트에서 분리 가능
+  - 다수의 하윗값을 포함하는 복잡한 정적 로직을 만드는 경우나 다음 state가 이전 state에 의존적인 경우
+  - 상태 업데이트 로직을 컴포넌트 바깥에 작성 가능하고, 다른 파일에 작성 후 로드 가능
+
 
 ```react
 // 초기화 지연
-// 
 function init(initialCount) {
   return {count: initialCount};
 }
-=======
-- `useState`와 비슷하지만 컴포넌트의 상태 업데이트 로직을 컴포넌트에서 분리 가능
-  - 다수의 하윗값을 포함하는 복잡한 정적 로직을 만드는 경우나 다음 state가 이전 state에 의존적인 경우
-  - 상태  업데이트 로직을 컴포넌트 바깥에 작성 가능하고, 다른 파일에 작성 후 로드 가능
-
-```react
-// useReducer
-const initialState = { count: 0 };
->>>>>>> 70122a43344f91a00d5686d555be8a786eee2b2a
-
 function reducer(state, action) {
   switch (action.type) {
     case 'increment':
-<<<<<<< HEAD
       return {count: state.count + 1};
     case 'decrement':
       return {count: state.count - 1};
     case 'reset':
       return init(action.payload);
-=======
-      return { count: state.count + 1 };
-    case 'decrement':
-      return { count: state.count - 1 };
->>>>>>> 70122a43344f91a00d5686d555be8a786eee2b2a
     default:
       throw new Error();
   }
 }
-
-<<<<<<< HEAD
 function Counter({initialCount}) {
   const [state, dispatch] = useReducer(reducer, initialCount, init);
   return (
@@ -263,18 +243,9 @@ function Counter({initialCount}) {
       </button>
       <button onClick={() => dispatch({type: 'decrement'})}>-</button>
       <button onClick={() => dispatch({type: 'increment'})}>+</button>
-=======
-function Counter() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  
-  return (
-    <>
-      Count: { state.count }
-      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
-	    <button onClick={() => dispatch({type: 'increment'})}>+</button>
->>>>>>> 70122a43344f91a00d5686d555be8a786eee2b2a
     </>
   );
 }
+
 ```
 
