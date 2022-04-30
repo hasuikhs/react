@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useRef } from 'react';
+import { Container, Form, Button } from 'react-bootstrap';
+import API from './common/API';
 
 function App() {
 
@@ -9,7 +10,7 @@ function App() {
   const [body, setBody] = useState('');
   const bodyRef = useRef(null);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (title === '') {
       alert('title 열이 비어있음!');
       titleRef.current.focus();
@@ -22,39 +23,48 @@ function App() {
       return;
     }
 
-    // db 실행 npx json-server --watch db.json --port=3001
-    axios.post('http://localhost:3001/posts', {
-      title: title,
-      body: body
-    })
+    try {
+      await API.post('/posts', {
+        title: title,
+        body: body
+      });
+      alert('입력 완료');
+
+    } catch (e) {
+      alert('입력 실패');
+    }
   }
 
   return (
-    <div className="container">
-      <div className="mb-3">
-        <label className="form-label">Title</label>
-        <input
-          ref={ titleRef }
-          className="form-control"
-          placeholder="title을 입력해주세요"
-          value={ title }
-          onChange={ e => setTitle(e.target.value) }
-        />
-      </div><div className="mb-3">
-        <label className="form-label">Body</label>
-        <textarea
-          ref={ bodyRef }
-          className="form-control"
-          placeholder="body를 입력해주세요"
-          value={ body }
-          rows="20"
-          onChange={ e => setBody(e.target.value) }
-        />
-      </div>
-      <button className="btn btn-primary" onClick={ onSubmit }>
-        Post
-      </button>
-    </div>
+    <>
+      <Container>
+        <Form>
+          <Form.Group className='mb-3' controlId='title'>
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              ref={ titleRef }
+              type='text'
+              placeholder='title을 입력해주세요.'
+              value={ title }
+              onChange={ e => setTitle(e.target.value) }
+            />
+          </Form.Group>
+          <Form.Group className='mb-3' controlId='body'>
+            <Form.Label>Body</Form.Label>
+            <Form.Control
+              as='textarea'
+              rows={ 10 }
+              ref={ bodyRef }
+              type='text'
+              placeholder='body를 입력해주세요.'
+              value={ body }
+              onChange={ e => setBody(e.target.value) }
+            />
+          </Form.Group>
+          <Button variant='primary' onClick={ onSubmit }>Post</Button>
+        </Form>
+      </Container>
+    </>
   );
 }
 
