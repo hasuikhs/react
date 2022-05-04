@@ -7,25 +7,23 @@ function PostList() {
   const [posts, setPosts] = useState([]);
   const [limit, setLimit] = useState(3);
   const [page, setPage] = useState(1);
-  const offset = (page - 1) * limit;
+  const [endPage, setEndPage] = useState(1);
 
   // 페이지 가져오기
   const getPosts = async () => {
     try {
-      const res = await API.get(`/posts?_limit=${ limit }&_page=${ page }`);
+      const res = await API.get(`/posts?_sort=id&_order=desc&_limit=${ limit }&_page=${ page }`);
 
       if (res.status === 200) {
         setPosts(res.data);
+
+        setEndPage(parseInt(res.headers['x-total-count'] / limit) + 1);
       }
 
     } catch (error) {
 
     }
   }
-
-  useEffect(() => {
-    getPosts();
-  }, []);
 
   useEffect(() => {
     getPosts();
@@ -64,7 +62,7 @@ function PostList() {
           <Pagination.First onClick={ () => setPage(1) } />
           <Pagination.Prev onClick={ () => setPage(page - 1) }/>
           <Pagination.Next onClick={ () => setPage(page + 1) } />
-          <Pagination.Last />
+          <Pagination.Last onClick={ () => setPage(endPage) }/>
         </Pagination>
       </Row>
     </Container>
