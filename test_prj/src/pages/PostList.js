@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Table } from 'react-bootstrap';
+import { Container, Pagination, Row, Table } from 'react-bootstrap';
 import API from '../common/API';
 
 function PostList() {
 
   const [posts, setPosts] = useState([]);
+  const [limit, setLimit] = useState(3);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
+
+  // 페이지 가져오기
   const getPosts = async () => {
     try {
-      const res = await API.get('/posts');
+      const res = await API.get(`/posts?_limit=${ limit }&_page=${ page }`);
 
       if (res.status === 200) {
         setPosts(res.data);
@@ -20,11 +25,20 @@ function PostList() {
 
   useEffect(() => {
     getPosts();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    getPosts();
+
+    if (page < 1) {
+      setPage(1);
+    }
+
+  }, [page]);
 
   return (
     <Container>
-      <Row className='mt-5'>
+      <Row className='mt-5 justify-content-md-center'>
         <Table striped bordered hover responsive>
           <thead>
             <tr>
@@ -45,6 +59,13 @@ function PostList() {
             }
           </tbody>
         </Table>
+
+        <Pagination className='justify-content-md-center'>
+          <Pagination.First onClick={ () => setPage(1) } />
+          <Pagination.Prev onClick={ () => setPage(page - 1) }/>
+          <Pagination.Next onClick={ () => setPage(page + 1) } />
+          <Pagination.Last />
+        </Pagination>
       </Row>
     </Container>
   );
