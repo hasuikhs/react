@@ -11,11 +11,11 @@ const routes = [
     element: <Home />
   },
   {
-    path: 'list',
+    path: '/list',
     element: <PostList />
   },
   {
-    path: 'post',
+    path: '/post',
     element: <PostInput />
   },
   {

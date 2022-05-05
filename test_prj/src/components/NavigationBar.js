@@ -10,8 +10,8 @@ function NavigationBar() {
           <NavLink to="/" className="navbar-brand">Navbar</NavLink>
           <Nav className="me-auto">
             <NavLink to="/" className="nav-link">Home</NavLink>
-            <NavLink to="list" className="nav-link">글목록</NavLink>
-            <NavLink to="post" className="nav-link">글쓰기</NavLink>
+            <NavLink to="/list" className="nav-link">글목록</NavLink>
+            <NavLink to="/post" className="nav-link">글쓰기</NavLink>
           </Nav>
         </Container>
       </Navbar>

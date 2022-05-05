@@ -21,17 +21,11 @@ function PostList() {
       }
 
     } catch (error) {
-
     }
   }
 
   useEffect(() => {
     getPosts();
-
-    if (page < 1) {
-      setPage(1);
-    }
-
   }, [page]);
 
   return (
@@ -60,8 +54,8 @@ function PostList() {
 
         <Pagination className='justify-content-md-center'>
           <Pagination.First onClick={ () => setPage(1) } />
-          <Pagination.Prev onClick={ () => setPage(page - 1) }/>
-          <Pagination.Next onClick={ () => setPage(page + 1) } />
+          <Pagination.Prev onClick={ () => page > 1 && setPage(page - 1) }/>
+          <Pagination.Next onClick={ () => page < endPage && setPage(page + 1) } />
           <Pagination.Last onClick={ () => setPage(endPage) }/>
         </Pagination>
       </Row>

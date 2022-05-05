@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import API from '../common/API';
 
 function PostInput() {
@@ -8,6 +9,8 @@ function PostInput() {
 
   const [body, setBody] = useState('');
   const bodyRef = useRef(null);
+
+  const navigate = useNavigate();
 
   const onSubmit = async () => {
     if (title === '') {
@@ -27,7 +30,8 @@ function PostInput() {
         title: title,
         body: body,
       });
-      alert('입력 완료');
+
+      navigate('/list');
     } catch (e) {
       alert('입력 실패');
     }
