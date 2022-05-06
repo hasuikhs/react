@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Pagination, Row, Table } from 'react-bootstrap';
+import { Container, Row, Table } from 'react-bootstrap';
 import API from '../common/API';
+import TablePagination from '../components/TablePagination';
 
 function PostList() {
 
@@ -52,12 +53,11 @@ function PostList() {
           </tbody>
         </Table>
 
-        <Pagination className='justify-content-md-center'>
-          <Pagination.First onClick={ () => setPage(1) } />
-          <Pagination.Prev onClick={ () => page > 1 && setPage(page - 1) }/>
-          <Pagination.Next onClick={ () => page < endPage && setPage(page + 1) } />
-          <Pagination.Last onClick={ () => setPage(endPage) }/>
-        </Pagination>
+        <TablePagination
+          page={ page }
+          endPage={ endPage }
+          setPage= { setPage }
+        />
       </Row>
     </Container>
   );
