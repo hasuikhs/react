@@ -56,6 +56,7 @@ function PostList() {
         <TablePagination
           page={ page }
           endPage={ endPage }
+          limit={ limit }
           setPage= { setPage }
         />
       </Row>
