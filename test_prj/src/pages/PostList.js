@@ -6,7 +6,7 @@ import TablePagination from '../components/TablePagination';
 function PostList() {
 
   const [posts, setPosts] = useState([]);
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(2);
   const [page, setPage] = useState(1);
   const [endPage, setEndPage] = useState(1);
 
@@ -43,7 +43,7 @@ function PostList() {
             {
               posts.map(item => {
                 return (
-                  <tr>
+                  <tr key={ item.id }>
                     <td>{item.id}</td>
                     <td>{item.title}</td>
                   </tr>
