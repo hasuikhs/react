@@ -6,14 +6,20 @@ function TablePagination({page, endPage, limit, setPage}) {
   // 한번에 5개의 페이지를 보여주고 싶음
   const pages = [];
 
-  for (let num = 1; num <= 5; num++) {
+  let leftSide = page - 2;
+  if (leftSide <= 0) leftSide = 1;
+
+  let rightSide = page + 2;
+  if (rightSide > endPage) rightSide = endPage;
+
+  for (let num = leftSide; num <= rightSide; num++) {
     if (num <= endPage) {
       pages.push(num);
 
       if (endPage === 1) break;
     }
   }
-  
+
   return (
     <>
       <Pagination className='justify-content-md-center'>
