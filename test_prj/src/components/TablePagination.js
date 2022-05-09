@@ -39,7 +39,6 @@ function TablePagination({page, totalCount, limit, setPage}) {
             { curPage }
           </Pagination.Item>
         )) }
-        <Pagination.Ellipsis />
         <Pagination.Next onClick={ () => setPage(page + 1) } disabled={ page === endPage } />
         <Pagination.Last onClick={ () => setPage(endPage) } disabled={ page === endPage } />
       </Pagination>
