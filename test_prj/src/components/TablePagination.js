@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Pagination } from 'react-bootstrap';
 
-function TablePagination({page, endPage, limit, setPage}) {
+function TablePagination({page, totalCount, limit, setPage}) {
 
   // 한번에 5개의 페이지를 보여주고 싶음
   const pages = [];
+
+  let endPage = parseInt(totalCount / limit);
+  if (totalCount > limit * endPage) {
+    endPage++;
+  }
 
   let leftSide = page - 2;
   if (leftSide <= 0) leftSide = 1;
@@ -34,6 +39,7 @@ function TablePagination({page, endPage, limit, setPage}) {
             { curPage }
           </Pagination.Item>
         )) }
+        <Pagination.Ellipsis />
         <Pagination.Next onClick={ () => setPage(page + 1) } disabled={ page === endPage } />
         <Pagination.Last onClick={ () => setPage(endPage) } disabled={ page === endPage } />
       </Pagination>

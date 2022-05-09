@@ -9,6 +9,7 @@ function PostList() {
   const [limit, setLimit] = useState(2);
   const [page, setPage] = useState(1);
   const [endPage, setEndPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
   // 페이지 가져오기
   const getPosts = async () => {
@@ -18,9 +19,8 @@ function PostList() {
       if (res.status === 200) {
         setPosts(res.data);
 
-        setEndPage(parseInt(res.headers['x-total-count'] / limit) + 1);
+        setTotalCount(res.headers['x-total-count']);
       }
-
     } catch (error) {
     }
   }
@@ -55,7 +55,7 @@ function PostList() {
 
         <TablePagination
           page={ page }
-          endPage={ endPage }
+          totalCount={ totalCount }
           limit={ limit }
           setPage= { setPage }
         />
