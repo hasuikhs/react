@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import API from '../common/API';
 
@@ -40,33 +40,35 @@ function PostInput() {
   return (
     <>
       <Container>
-        <Form>
-          <Form.Group className='mb-3' controlId='title'>
-            <Form.Label>Title</Form.Label>
-            <Form.Control
-              ref={ titleRef }
-              type='text'
-              placeholder='title을 입력해주세요.'
-              value={title}
-              onChange={ e => setTitle(e.target.value) }
-            />
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='body'>
-            <Form.Label>Body</Form.Label>
-            <Form.Control
-              as='textarea'
-              rows={ 10 }
-              ref={ bodyRef }
-              type='text'
-              placeholder='body를 입력해주세요.'
-              value={ body }
-              onChange={ e => setBody(e.target.value) }
-            />
-          </Form.Group>
-          <Button variant='primary' onClick={ onSubmit }>
-            Post
-          </Button>
-        </Form>
+        <Row className='mt-5 justify-content-md-center'>
+          <Form>
+            <Form.Group className='mb-3' controlId='title'>
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                ref={ titleRef }
+                type='text'
+                placeholder='title을 입력해주세요.'
+                value={title}
+                onChange={ e => setTitle(e.target.value) }
+              />
+            </Form.Group>
+            <Form.Group className='mb-3' controlId='body'>
+              <Form.Label>Body</Form.Label>
+              <Form.Control
+                as='textarea'
+                rows={ 10 }
+                ref={ bodyRef }
+                type='text'
+                placeholder='body를 입력해주세요.'
+                value={ body }
+                onChange={ e => setBody(e.target.value) }
+              />
+            </Form.Group>
+            <Button variant='primary' onClick={ onSubmit }>
+              Post
+            </Button>
+          </Form>
+        </Row>
       </Container>
     </>
   );

@@ -12,6 +12,7 @@ function NavigationBar() {
             <NavLink to="/" className="nav-link">Home</NavLink>
             <NavLink to="/list" className="nav-link">글목록</NavLink>
             <NavLink to="/post" className="nav-link">글쓰기</NavLink>
+            <NavLink to='/modal' className="nav-link">Modal</NavLink>
           </Nav>
         </Container>
       </Navbar>

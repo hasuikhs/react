@@ -8,7 +8,6 @@ function PostList() {
   const [posts, setPosts] = useState([]);
   const [limit, setLimit] = useState(2);
   const [page, setPage] = useState(1);
-  const [endPage, setEndPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
   // 페이지 가져오기

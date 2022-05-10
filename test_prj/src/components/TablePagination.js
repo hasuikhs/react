@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Pagination } from 'react-bootstrap';
 
 function TablePagination({page, totalCount, limit, setPage}) {
