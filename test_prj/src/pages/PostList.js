@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Table } from 'react-bootstrap';
+import { Col, Container, Row, Table } from 'react-bootstrap';
 import API from '../common/API';
 import TablePagination from '../components/TablePagination';
+import ModalComponent from '../components/ModalComponent';
 
 function PostList() {
 
   const [posts, setPosts] = useState([]);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
 
@@ -30,7 +31,10 @@ function PostList() {
 
   return (
     <Container>
-      <Row className='mt-5 justify-content-md-center'>
+      <Row className='mt-3'>
+        <Col lg="3" className='mb-1'>
+          <ModalComponent getPosts={ getPosts }/>
+        </Col>
         <Table striped bordered hover responsive>
           <thead>
             <tr>

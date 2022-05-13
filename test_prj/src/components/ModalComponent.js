@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import API from '../common/API';
 
-function ModalComponent() {
+function ModalComponent({ getPosts }) {
 
   const [show, setShow] = useState(false);
 
@@ -38,6 +38,7 @@ function ModalComponent() {
       if (res.status === 201) {
         alert('입력 성공!');
         handleClose();
+        getPosts();
       }
     } catch (e) {
       alert('입력 실패');
@@ -48,7 +49,7 @@ function ModalComponent() {
   return (
     <>
       <Button variant='primary' onClick={ handleShow }>
-        입력
+        글쓰기
       </Button>
 
       <Modal show={ show } onHide={ handleClose } backdrop='static' keyboard={ false }>
