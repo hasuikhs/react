@@ -2,18 +2,25 @@ import React, { useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import API from '../common/API';
 
-function ModalComponent({ getPosts }) {
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+function ModalComponent({ setPage }) {
 
   const [title, setTitle] = useState('');
   const titleRef = useRef(null);
-
+  
   const [body, setBody] = useState('');
   const bodyRef = useRef(null);
+  
+  const reset = () => {
+    setTitle('');
+    setBody('');
+  }
+  
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+    reset();
+  };
+  const handleShow = () => setShow(true);
 
   const onSubmit = async  () => {
     
@@ -37,13 +44,14 @@ function ModalComponent({ getPosts }) {
 
       if (res.status === 201) {
         alert('입력 성공!');
+
         handleClose();
-        getPosts();
+
+        setPage(1);
       }
     } catch (e) {
-      alert('입력 실패');
+      console.error(e);
     }
-
   }
 
   return (

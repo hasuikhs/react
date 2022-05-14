@@ -12,7 +12,7 @@ function PostList() {
   const [totalCount, setTotalCount] = useState(0);
 
   // 페이지 가져오기
-  const getPosts = async () => {
+  const getPosts = async (page) => {
     try {
       const res = await API.get(`/posts?_sort=id&_order=desc&_limit=${ limit }&_page=${ page }`);
 
@@ -26,14 +26,14 @@ function PostList() {
   }
 
   useEffect(() => {
-    getPosts();
+    getPosts(page);
   }, [page]);
 
   return (
     <Container>
       <Row className='mt-3'>
         <Col lg="3" className='mb-1'>
-          <ModalComponent getPosts={ getPosts }/>
+          <ModalComponent setPage={ setPage }/>
         </Col>
         <Table striped bordered hover responsive>
           <thead>
