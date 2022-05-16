@@ -25,6 +25,17 @@ function PostList() {
     }
   }
 
+  const getPost = async (id) => {
+    try {
+      const res = await API.get(`/posts/${id}`);
+
+      if (res.status === 200) {
+        console.log(res.data);
+      }
+    } catch (error) {
+    }
+  }
+
   useEffect(() => {
     getPosts();
   }, [page]);
@@ -48,7 +59,11 @@ function PostList() {
                 return (
                   <tr key={ item.id }>
                     <td>{item.id}</td>
-                    <td>{item.title}</td>
+                    <td>
+                      <a onClick={ () => getPost(item.id) }>
+                        {item.title}
+                      </a>
+                    </td>
                   </tr>
                 );
               })
