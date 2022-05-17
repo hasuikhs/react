@@ -2,9 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import API from '../common/API';
 
-function ModalComponent({ showModal, setPage }) {
-
-  console.log(showModal)
+function PostModal({ showModal, setShowModal, setPage }) {
 
   const [title, setTitle] = useState('');
   const titleRef = useRef(null);
@@ -16,13 +14,11 @@ function ModalComponent({ showModal, setPage }) {
     setTitle('');
     setBody('');
   }
-  
-  const [show, setShow] = useState(false);
-  const handleClose = () => {
-    setShow(false);
+
+  const closeModal = () => {
+    setShowModal(false);
     reset();
   };
-  const handleShow = () => setShow(true);
 
   const onSubmit = async  () => {
 
@@ -45,8 +41,9 @@ function ModalComponent({ showModal, setPage }) {
       if (res.status === 201) {
         alert('입력 성공!');
 
-        handleClose();
+        closeModal();
 
+        console.log('set Page')
         setPage(1);
       }
     } catch (e) {
@@ -56,7 +53,7 @@ function ModalComponent({ showModal, setPage }) {
 
   return (
     <>
-      <Modal show={ show } onHide={ handleClose } backdrop='static' keyboard={ false }>
+      <Modal show={ showModal } onHide={ closeModal } backdrop='static' keyboard={ false }>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
@@ -88,7 +85,7 @@ function ModalComponent({ showModal, setPage }) {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={ handleClose }>
+          <Button variant='secondary' onClick={ closeModal }>
             Close
           </Button>
           <Button variant='primary' onClick={ onSubmit } >
@@ -100,4 +97,4 @@ function ModalComponent({ showModal, setPage }) {
   );
 }
 
-export default ModalComponent;
+export default PostModal;

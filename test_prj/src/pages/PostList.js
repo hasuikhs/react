@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import API from '../common/API';
 import TablePagination from '../components/TablePagination';
-import ModalComponent from '../components/ModalComponent';
+import PostModal from '../components/PostModal';
 
 function PostList() {
 
@@ -46,6 +46,7 @@ function PostList() {
 
   useEffect(() => {
     getPosts(page);
+    console.log(page)
   }, [page]);
 
   return (
@@ -59,6 +60,7 @@ function PostList() {
             글쓰기
           </Button>
         </Col>
+
         <Table striped bordered hover responsive>
           <thead>
             <tr>
@@ -76,7 +78,7 @@ function PostList() {
                       <a onClick={ () => {
                         let data = getPost(item.id)
 
-                        console.log(data);
+                        setShowModal(true);
                       } }>
                         {item.title}
                       </a>
@@ -95,6 +97,12 @@ function PostList() {
           setPage= { setPage }
         />
       </Row>
+
+      <PostModal
+        showModal={ showModal }
+        setShowModal={ setShowModal }
+        setPage={ setPage }
+      />
     </Container>
   );
 }
