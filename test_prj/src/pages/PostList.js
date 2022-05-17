@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import API from '../common/API';
 import TablePagination from '../components/TablePagination';
 import ModalComponent from '../components/ModalComponent';
@@ -10,6 +10,8 @@ function PostList() {
   const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+
+  const [showModal, setShowModal] = useState(false);
 
   // 페이지 가져오기
   const getPosts = async (page) => {
@@ -25,15 +27,21 @@ function PostList() {
     }
   }
 
+  // 단일 데이터 가져오기
   const getPost = async (id) => {
+
+    let ret = {};
     try {
       const res = await API.get(`/posts/${id}`);
 
       if (res.status === 200) {
-        console.log(res.data);
+        ret = res.data;
       }
     } catch (error) {
+      ret = {}
     }
+
+    return ret;
   }
 
   useEffect(() => {
@@ -44,7 +52,12 @@ function PostList() {
     <Container>
       <Row className='mt-3'>
         <Col lg="3" className='mb-1'>
-          <ModalComponent setPage={ setPage }/>
+          <Button
+            varient='primary'
+            onClick={ () => setShowModal(true) }
+          >
+            글쓰기
+          </Button>
         </Col>
         <Table striped bordered hover responsive>
           <thead>
@@ -60,7 +73,11 @@ function PostList() {
                   <tr key={ item.id }>
                     <td>{item.id}</td>
                     <td>
-                      <a onClick={ () => getPost(item.id) }>
+                      <a onClick={ () => {
+                        let data = getPost(item.id)
+
+                        console.log(data);
+                      } }>
                         {item.title}
                       </a>
                     </td>

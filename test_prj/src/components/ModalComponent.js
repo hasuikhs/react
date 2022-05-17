@@ -2,7 +2,9 @@ import React, { useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import API from '../common/API';
 
-function ModalComponent({ setPage }) {
+function ModalComponent({ showModal, setPage }) {
+
+  console.log(showModal)
 
   const [title, setTitle] = useState('');
   const titleRef = useRef(null);
@@ -23,17 +25,15 @@ function ModalComponent({ setPage }) {
   const handleShow = () => setShow(true);
 
   const onSubmit = async  () => {
-    
+
     if (title === '') {
       alert('title 열이 비어있음!');
-      titleRef.current.focus();
-      return;
+      return titleRef.current.focus();
     }
 
     if (body === '') {
       alert('body 내용이 비어있음!');
-      bodyRef.current.focus();
-      return;
+      return bodyRef.current.focus();
     }
 
     try {
@@ -56,10 +56,6 @@ function ModalComponent({ setPage }) {
 
   return (
     <>
-      <Button variant='primary' onClick={ handleShow }>
-        글쓰기
-      </Button>
-
       <Modal show={ show } onHide={ handleClose } backdrop='static' keyboard={ false }>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
