@@ -1,18 +1,19 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import API from '../common/API';
 
-function PostModal({ showModal, setShowModal, setPage }) {
+function PostModal({ showModal, setShowModal, setPage, modalData, setModalData }) {
 
   const [title, setTitle] = useState('');
   const titleRef = useRef(null);
-  
+
   const [body, setBody] = useState('');
   const bodyRef = useRef(null);
-  
+
   const reset = () => {
     setTitle('');
     setBody('');
+    setModalData({});
   }
 
   const closeModal = () => {
@@ -33,17 +34,26 @@ function PostModal({ showModal, setShowModal, setPage }) {
     }
 
     try {
-      let res = await API.post('/posts', {
-        title: title,
-        body: body
-      });
+      let res = undefined;
 
-      if (res.status === 201) {
+      if (modalData.id) {
+        res = await API.put(`/posts/${ modalData.id }`, {
+          title: title,
+          body: body
+        });
+      } else {
+        res = await API.post('/posts', {
+          title: title,
+          body: body
+        });
+      }
+
+      console.log(4)
+      if (res.status === 200) {
         alert('입력 성공!');
 
         closeModal();
 
-        console.log('set Page')
         setPage(1);
       }
     } catch (e) {
@@ -51,11 +61,20 @@ function PostModal({ showModal, setShowModal, setPage }) {
     }
   }
 
+  useEffect(() => {
+    if (modalData.id) {
+      setTitle(modalData.title);
+      setBody(modalData.body);
+    } else {
+      reset();
+    }
+  }, [showModal]);
+
   return (
     <>
       <Modal show={ showModal } onHide={ closeModal } backdrop='static' keyboard={ false }>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>{ modalData.id ? '수정하기' : '등록하기' }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>

@@ -3,6 +3,7 @@ import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import API from '../common/API';
 import TablePagination from '../components/TablePagination';
 import PostModal from '../components/PostModal';
+import { Link } from 'react-router-dom';
 
 function PostList() {
 
@@ -12,6 +13,7 @@ function PostList() {
   const [totalCount, setTotalCount] = useState(0);
 
   const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({});
 
   // 페이지 가져오기
   const getPosts = async (page) => {
@@ -46,7 +48,6 @@ function PostList() {
 
   useEffect(() => {
     getPosts(page);
-    console.log(page)
   }, [page]);
 
   return (
@@ -73,15 +74,16 @@ function PostList() {
               posts.map(item => {
                 return (
                   <tr key={ item.id }>
-                    <td>{item.id}</td>
+                    <td>{ item.id }</td>
                     <td>
-                      <a onClick={ () => {
-                        let data = getPost(item.id)
+                      <Link to='#' onClick={ async () => {
+                        let data = await getPost(item.id);
 
                         setShowModal(true);
+                        setModalData(data);
                       } }>
-                        {item.title}
-                      </a>
+                        { item.title }
+                      </Link>
                     </td>
                   </tr>
                 );
@@ -102,6 +104,8 @@ function PostList() {
         showModal={ showModal }
         setShowModal={ setShowModal }
         setPage={ setPage }
+        modalData={ modalData }
+        setModalData={ setModalData }
       />
     </Container>
   );
