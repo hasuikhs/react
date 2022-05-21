@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import API from '../common/API';
+import { sleepTime } from '../common/common';
+import Swal from 'sweetalert2';
 
 function PostModal({ showModal, setShowModal, setPage, modalData, setModalData }) {
 
@@ -24,12 +26,24 @@ function PostModal({ showModal, setShowModal, setPage, modalData, setModalData }
   const onSubmit = async  () => {
 
     if (title === '') {
-      alert('title 열이 비어있음!');
+      await Swal.fire({
+        icon: 'warning',
+        title: 'title이 비어있어요!'
+      });
+
+      await sleepTime(300);
+
       return titleRef.current.focus();
     }
 
     if (body === '') {
-      alert('body 내용이 비어있음!');
+      await Swal.fire({
+        icon: 'warning',
+        title: 'body가 비어있어요!'
+      });
+
+      await sleepTime(300);
+
       return bodyRef.current.focus();
     }
 
@@ -48,13 +62,16 @@ function PostModal({ showModal, setShowModal, setPage, modalData, setModalData }
         });
       }
 
-      console.log(4)
-      if (res.status === 200) {
-        alert('입력 성공!');
+      if ([200, 201].includes(res.status)) {
+        let ret = await Swal.fire({
+          icon: 'success',
+          title: '입력에 성공하였습니다.'
+        });
 
-        closeModal();
-
-        setPage(1);
+        if (ret.isConfirmed) {
+          closeModal();
+          setPage(1);
+        }
       }
     } catch (e) {
       console.error(e);
