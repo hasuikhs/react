@@ -103,9 +103,11 @@ function PostList() {
       <PostModal
         showModal={ showModal }
         setShowModal={ setShowModal }
+        page={ page }
         setPage={ setPage }
         modalData={ modalData }
         setModalData={ setModalData }
+        getPosts={ getPosts }
       />
     </Container>
   );

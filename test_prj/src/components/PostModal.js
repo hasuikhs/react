@@ -4,7 +4,7 @@ import API from '../common/API';
 import { sleepTime } from '../common/common';
 import Swal from 'sweetalert2';
 
-function PostModal({ showModal, setShowModal, setPage, modalData, setModalData }) {
+function PostModal({ showModal, setShowModal, page, setPage, modalData, setModalData, getPosts }) {
 
   const [title, setTitle] = useState('');
   const titleRef = useRef(null);
@@ -70,7 +70,12 @@ function PostModal({ showModal, setShowModal, setPage, modalData, setModalData }
 
         if (ret.isConfirmed) {
           closeModal();
-          setPage(1);
+
+          if (page !== 1) {
+            setPage(1);
+          } else {
+            getPosts(page);
+          }
         }
       }
     } catch (e) {
