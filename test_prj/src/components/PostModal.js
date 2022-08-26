@@ -26,25 +26,19 @@ function PostModal({ showModal, setShowModal, page, setPage, modalData, setModal
   const onSubmit = async  () => {
 
     if (title === '') {
-      await Swal.fire({
+      return await Swal.fire({
         icon: 'warning',
-        title: 'title이 비어있어요!'
+        title: 'title이 비어있어요!',
+        didClose: () => titleRef.current.focus()
       });
-
-      await sleepTime(300);
-
-      return titleRef.current.focus();
     }
 
     if (body === '') {
-      await Swal.fire({
+      return await Swal.fire({
         icon: 'warning',
-        title: 'body가 비어있어요!'
+        title: 'body가 비어있어요!',
+        didClose: () => bodyRef.current.focus()
       });
-
-      await sleepTime(300);
-
-      return bodyRef.current.focus();
     }
 
     try {
@@ -65,7 +59,7 @@ function PostModal({ showModal, setShowModal, page, setPage, modalData, setModal
       if ([200, 201].includes(res.status)) {
         let ret = await Swal.fire({
           icon: 'success',
-          title: '입력에 성공하였습니다.'
+          title: '입력에 성공하였습니다.',
         });
 
         if (ret.isConfirmed) {
