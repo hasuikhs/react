@@ -249,3 +249,16 @@ function Counter({initialCount}) {
 
 ```
 
+## 5. useMemo
+
+```react
+const memorizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+```
+
+- 메모이제이션된 값을 반환, 함수 컴포넌트 내부에서 발생하는 **연산 최적화** 가능
+- `useMemo`는 의존성이 변경되었을 때에만 다시 계산함
+- 하지만 통상적으로 랜더링 중에는 하지 않는 것은 `useMemo`에서 하지 말고, `useEffect`에서 해야함
+- 배열이 없는 경우에는 매 랜더링마다 새 값을 계산하게 됨
+- `useMemo`는 성능 최적화를 위해 사용 가능하지만, 의미상으로 보장되었다고 생각하지 말 것
+  - `useMemo` 함수를 남용하면, 컴포넌트의 복잡도가 올라가기 때문에 코드를 읽기 어려워지고 유지 보수성 저하 가능
+  - 재활용을 위해서 GC에서 제외되기 때문에 메모리를 더 쓸 수 있음
