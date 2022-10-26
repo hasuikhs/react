@@ -110,7 +110,9 @@ function Button() {
   - `useState` 훅은 이전 상태값을 덮어쓰기에 ...state와 같은 코드가 필요
   - 상태값들을 하나의 객체로 관리할 때는 `useReducer` 훅을 사용하는 것이 추천됨
 
-## 2. useEffect
+## 2. useEffect, useLayoutEffect
+- [참고](https://github.com/donavon/hook-flow)
+### 2.1 useEffect
 
 - 함수 실행 시 함수 외부의 상태를 변경하는 연산을 부수 효과라 하는데, 이 효과는 `useEffect`에서 처리하는게 추천
 - `useEffect` Hook에 입력하는 함수를 부수 효과 함수라 함
@@ -144,6 +146,13 @@ function Button() {
 - `useEffect` 안에서 사용하는 상태나, props가 있다면 `useEffect`의 두번째 매개변수에 넣어주어야하는 것이 규칙
   - 사용하는 값을 넣어주지 않는다면, useEffect 안의 함수가 실행될 때 최신 상태, prop을 가리키지 않음
 
+### 2.2 useLayoutEffect
+- 기본적인 형태는 `useEffect`와 동일
+- `useLayoutEffect`는 SSR은 아님
+- `useEffect`는 화면이 복잡해지면 렌더링 시간이 증가하게 되면서, `setState`에서 비어있는게 보여 불편한 경험을 제공
+- `useLayoutEffect`는 브라우저가 DOM을 그리기 전에 이펙트를 수행
+  - 즉, `useEffect`는 DOM이 화면에 그려진 이후 실행, `useLayoutEffect`는 DOM이 화면에 그려지기 전에 실행
+- 페인트되기 전에 DOM 조작이 필요할 경우 사용
 ## 3. useContext
 
 - 기존에 컴포넌트 간에 데이터를 전달하려면 props를 이용해야 했음
