@@ -152,7 +152,8 @@ function Button() {
 - `useEffect`는 화면이 복잡해지면 렌더링 시간이 증가하게 되면서, `setState`에서 비어있는게 보여 불편한 경험을 제공
 - `useLayoutEffect`는 브라우저가 DOM을 그리기 전에 이펙트를 수행
   - 즉, `useEffect`는 DOM이 화면에 그려진 이후 실행, `useLayoutEffect`는 DOM이 화면에 그려지기 전에 실행
-- 페인트되기 전에 DOM 조작이 필요할 경우 사용
+- 페인트되기 전에 DOM 조작이 필요할 경우 사용(화면 깜빡임 등)
+- `useEffect`와의 차이점은 브라우저 페인팅 전후에 따른 실행 순서의 차이
 ## 3. useContext
 
 - 기존에 컴포넌트 간에 데이터를 전달하려면 props를 이용해야 했음
