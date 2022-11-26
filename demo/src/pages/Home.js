@@ -17,7 +17,7 @@ function Home() {
     <MainDiv>
       연습장
       {
-        routes.filter(v => v.name !== 'NotFound').map(v => <Link key={ v.name } to={ v.path }>{ v.name }</Link>)
+        routes.map(v => <Link key={ v.name } to={ v.path }>{ v.name }</Link>)
       }
     </MainDiv>
   )

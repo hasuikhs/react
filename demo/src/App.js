@@ -1,17 +1,24 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import routes from './routes';
 
 function App() {
   return (
-    <div className="App">
-      <Routes>
-        {
-          routes.map(v => <Route key={ v.name } path={ v.path } element={ v.element } />)
-        }
-      </Routes>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            {
+              routes.map(route => {
+                return <Route key={ route.path } path={ route.path } element={ route.element } />
+              })
+            }
+          </Routes>
+        </Suspense>
+      </div>
+    </BrowserRouter>
   );
 }
 
