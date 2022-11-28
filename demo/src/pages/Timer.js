@@ -34,16 +34,6 @@ function Timer() {
   const startCountdown = () => {
     setMinutes(originMinutes);
     setSeconds(originSeconds);
-
-    const countDown = setInterval(() => {
-      if (minutes === 0 && seconds === 0) {
-        clearInterval(countDown);
-      } else {
-        setSeconds(prev => prev - 1)
-      }
-  
-      console.log(minutes, seconds)
-    }, 1_000);
   }
 
   useEffect(() => {
@@ -52,6 +42,25 @@ function Timer() {
       setOriginSeconds(originSeconds % 60);
     }
   }, [originSeconds]);
+
+  useEffect(() => {
+    const countDown = setInterval(() => {
+      console.log(pause)
+      if (!pause) clearInterval(countDown);
+      if (minutes === 0 && seconds === 0) {
+        clearInterval(countDown);
+      } else {
+        setSeconds(seconds - 1);
+        
+        if (minutes > 0 && seconds === 0) {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1_000);
+
+    return () => clearInterval(countDown);
+  }, [minutes, seconds]);
 
   return (
     <MainDiv>
