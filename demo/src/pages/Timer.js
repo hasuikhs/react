@@ -32,8 +32,17 @@ function Timer() {
   const [pause, setPause] = useState(true);
 
   const startCountdown = () => {
+    setPause(false);
     setMinutes(originMinutes);
     setSeconds(originSeconds);
+  }
+
+  const reset = () => {
+    setOriginMinutes(0);
+    setOriginSeconds(0);
+
+    setMinutes(0);
+    setSeconds(0);
   }
 
   useEffect(() => {
@@ -44,9 +53,8 @@ function Timer() {
   }, [originSeconds]);
 
   useEffect(() => {
+    if (pause) return;
     const countDown = setInterval(() => {
-      console.log(pause)
-      if (!pause) clearInterval(countDown);
       if (minutes === 0 && seconds === 0) {
         clearInterval(countDown);
       } else {
@@ -60,7 +68,7 @@ function Timer() {
     }, 1_000);
 
     return () => clearInterval(countDown);
-  }, [minutes, seconds]);
+  }, [minutes, seconds, pause]);
 
   return (
     <MainDiv>
@@ -97,7 +105,7 @@ function Timer() {
           시작
         </Button>
         <Button type="button" onClick={ () => setPause(!pause) }>재개/일시정지</Button>
-        <Button type="button">정지</Button>
+        <Button type="button" onClick={ reset }>정지</Button>
       </RowDiv>
 
     </MainDiv>
