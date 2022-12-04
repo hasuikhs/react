@@ -10,7 +10,7 @@ function MsgInput({ mutate, text = '', id = undefined }) {
     const text = textRef.current.value;
     textRef.current.value = '';
 
-    mutate(text, id);
+    mutate({ text, id });
   }
 
   return (
