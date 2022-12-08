@@ -15,8 +15,11 @@ function Home({ smsgs, users }) {
 
 export const getServerSideProps = async () => {
   // 서버메시지
-  const { messages: smsgs } = await fetcher(GET_MESSAGES);
-  const { users } = await fetcher(GET_USERS);
+  // 성능상의 이점으로 Promise.all 변경
+  const [ { messages: smsgs }, { users } ] = await Promise.all([
+    fetcher(GET_MESSAGES),
+    fetcher(GET_USERS)
+  ]);
 
   return {
     props: { smsgs, users }

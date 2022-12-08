@@ -12,8 +12,9 @@ const setMsgs = data => wrightDB('messages', data);
 const messageResolver = {
   Query: {
     // 아래 db 인자는 server index.js의 apollo server의 context db인자와 맞춰줌
-    messages: (parent, args, { db }) => {
-      return db.messages;
+    messages: (parent, { cursor = '' }, { db }) => {
+      const fromIndex = db.messages.findIndex(msg => msg.id === cursor) + 1;
+      return db.messages.slice(fromIndex, fromIndex + 15) || [];
     },
     message: (parent, { id = '' }, { db }) => {
       return db.messages.find(msg => msg.id === id);

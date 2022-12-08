@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { useQueryClient, useMutation, useQuery } from 'react-query';
+import { useQueryClient, useMutation, useQuery, useInfiniteQuery } from 'react-query';
 
 import MsgItem from './MsgItem';
 import MsgInput from './MsgInput';
 import { fetcher, QueryKeys } from '../queryClient';
 import { CREATE_MESSAGE, DELETE_MESSAGE, GET_MESSAGES, UPDATE_MESSAGE } from '../graphql/message';
-// import useInfiniteScroll from '../hooks/useInfiniteScroll';
+import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
 function MsgList({ smsgs, users }) {
   const client = useQueryClient(); // _app.js에서 만들어진 QueryClient를 계속 재사용 가능한 useQueryClient 훅
@@ -17,8 +17,8 @@ function MsgList({ smsgs, users }) {
   const [msgs, setMsgs] = useState(smsgs);
   const [editingId, setEditingId] = useState(null);
   // const [hasNext, setHasNext] = useState(true);
-  // const fetchMoreEl = useRef(null);
-  // const intersecting = useInfiniteScroll(fetchMoreEl);
+  const fetchMoreEl = useRef(null);
+  const intersecting = useInfiniteScroll(fetchMoreEl);
 
   const { mutate: onCreate } = useMutation(({ text }) => fetcher(CREATE_MESSAGE, { text, userId }), {
     onSuccess: ({ createMessage }) => {
@@ -65,17 +65,27 @@ function MsgList({ smsgs, users }) {
 
   const doneEdit = () => setEditingId(null);
 
-  const { data, error, isError } = useQuery(QueryKeys.MESSAGES, () => fetcher(GET_MESSAGES));
+  const { data, error, isError, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    QueryKeys.MESSAGES,
+    ({ pageParam = '' }) => fetcher(GET_MESSAGES, { cursor: pageParam }),
+    {
+      getNextPageParam: ({ messages }) => {
+        return messages?.[messages.length - 1]?.id;
+      }
+    }
+  );
 
   useEffect(() => {
-    if (!data?.messages) return;
-    setMsgs(data.messages);
-  }, [ data?.messages ]);
+    if (!data?.pages) return;
+    const mergedMsgs = data.pages.flatMap(d => d.messages);
+    setMsgs(mergedMsgs);
+  }, [ data?.pages ]);
 
-  // useEffect(() => {
-  //   // 아래 한계선을 치면서 다음 데이터가 있을 경우
-  //   if (intersecting && hasNext) getMessages();
-  // }, [ intersecting ]);
+  useEffect(() => {
+    // 아래 한계선을 치면서 다음 데이터가 있을 경우
+    if (intersecting && hasNextPage) fetchNextPage();
+  }, [ intersecting, hasNextPage ]);
+
   return (
     <>
       {
@@ -94,7 +104,7 @@ function MsgList({ smsgs, users }) {
             user={ users.find(x => msg.userId === x.id ) }
           />)) }
       </ul>
-      {/* <div ref={ fetchMoreEl } /> */}
+      <div ref={ fetchMoreEl } />
     </>
   );
 }
