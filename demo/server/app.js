@@ -27,6 +27,7 @@ const server = app.listen(PORT, () => {
 const sse = new SSE(server, { path: '/alarm'});
 sse.on('connection', client => {
   let alarm = setInterval(() => {
+    console.log('ter')
     if (client.res._closed) {
       clearInterval(alarm);
     }

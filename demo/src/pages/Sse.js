@@ -6,10 +6,18 @@ function Sse() {
   const [serverTime, setServerTime] = useState(Date.now().toString());
 
   const sseAlarm = () => {
+    const originPath = window.location.pathname;
     const es = new EventSource(`${ sseUrl }/alarm`);
+    
+    window.addEventListener('beforeunload', () => {
+      es.close();
+    })
 
     es.addEventListener('message', event => {
-      const { type, data } = event;
+      const { data } = event;
+      if (originPath !== window.location.pathname) {
+        es.close();
+      }
       setServerTime(data);
     });
     
