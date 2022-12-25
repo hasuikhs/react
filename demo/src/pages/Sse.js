@@ -9,18 +9,25 @@ function Sse() {
     const es = new EventSource(`${ sseUrl }/alarm`);
 
     es.addEventListener('message', event => {
-      setServerTime(event.data);
+      const { type, data } = event;
+      setServerTime(data);
     });
-
+    
     es.addEventListener('error', event => {
+      console.log('error')
       es.close();
     });
+
+    setTimeout(() => {
+      if (es.readyState === 2) {
+        console.log('already close');
+        return;
+      };
+
+      console.log('close')
+      es.close();
+    }, 5_000);
   };
-  
-  useEffect(() => {
-    console.log(serverTime);
-  
-  }, [serverTime])
 
   useEffect(() => {
     sseAlarm();

@@ -26,7 +26,11 @@ const server = app.listen(PORT, () => {
 // 'Access-Control-Allow-Origin': '*' 추가
 const sse = new SSE(server, { path: '/alarm'});
 sse.on('connection', client => {
-  setInterval(() => {
+  let alarm = setInterval(() => {
+    if (client.res._closed) {
+      clearInterval(alarm);
+    }
+
     client.send(Date.now().toString());
   }, 1_000);
 });
