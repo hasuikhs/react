@@ -11,7 +11,7 @@ function Sse() {
     
     window.addEventListener('beforeunload', () => {
       es.close();
-    })
+    });
 
     es.addEventListener('message', event => {
       const { data } = event;
@@ -20,7 +20,7 @@ function Sse() {
       }
       setServerTime(data);
     });
-    
+
     es.addEventListener('error', event => {
       console.log('error')
       es.close();

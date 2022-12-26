@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const SSE = require('sse');
 
 const PORT = 3030;
 
@@ -17,21 +16,20 @@ app.get('/hello', (req, res) => {
   res.send('Hello');
 });
 
-const server = app.listen(PORT, () => {
-  console.log(`express server listening on port ${ PORT }`);
+app.get('/alarm', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+
+  const alarm = setInterval(() => {
+    res.write(`id: 1\n\n`)
+    res.write(`data: ${ Date.now().toString() }\n\n`);
+  }, 1_000);
+
+  res.on('close', () => {
+    clearInterval(alarm);
+    res.end();
+  });
 });
 
-// cors 에러
-// node_modules/sse/lib/sseclient.js 23l
-// 'Access-Control-Allow-Origin': '*' 추가
-const sse = new SSE(server, { path: '/alarm'});
-sse.on('connection', client => {
-  let alarm = setInterval(() => {
-    console.log('ter')
-    if (client.res._closed) {
-      clearInterval(alarm);
-    }
-
-    client.send(Date.now().toString());
-  }, 1_000);
+app.listen(PORT, () => {
+  console.log(`express server listening on port ${ PORT }`);
 });
