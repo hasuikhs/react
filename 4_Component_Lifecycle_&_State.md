@@ -9,11 +9,11 @@
   - 초기 랜더링 시 필요한 데이터를 끌어오는 로직을 사용할 경우
   - `constructor()`  > `render()` > `componentDidMount()`
 
-  | <center>메서드</center> | <center>설명</center>                                        |
-  | ----------------------- | ------------------------------------------------------------ |
-  | `constructor()`         | Component 생성, 기본 state 정의 가능                         |
-  | `render()`              | Component 랜더링을 담당                                      |
-  | `componentDidMount()`   | Component 출력물이 DOM에 랜더링 된 후 실행, `setTimeout()`나 aJax 호출 |
+  | <center>메서드</center> | <center>설명</center>                                                                 |
+  | ----------------------- | ------------------------------------------------------------------------------------- |
+  | `constructor()`         | Component 생성, 기본 state 정의 가능, 컴포넌트가 마운트되기 전 호출                   |
+  | `render()`              | Component 랜더링을 담당, 컴포넌트를 DOM에 마운트하기 위해 호출                        |
+  | `componentDidMount()`   | Component 출력물이 DOM에 랜더링(마운트) 된 후 실행, `setTimeout()`나 aJax 호출        |
 
 - Component 업데이트 시
 
@@ -26,8 +26,12 @@
   | `shouldComponentUpdate(nextProps, nextState)`           | props, state 값이 볂기 직전에 호출                           |
   | `render()`                                              | Component 랜더링을 담당                                      |
   | `getSnapshotBeforeUpdate(prevProps, prevState)`         | DOM 변화 직전의 실제 DOM 정보를 가져옴                       |
-  | `componentDidMount(prevProps, prevState, snapshot)`     | 이 메서드의 실행 시점에 prop과 state가 바뀜, snapshot 파라미터를 이용해서 이전 prevProps와 prevState 값을 받아와 이용 가능 |
+  | `componentDidUpdate(prevProps, prevState, snapshot)`     | 이 메서드의 실행 시점에 prop과 state가 바뀜, snapshot 파라미터를 이용해서 이전 prevProps와 prevState 값을 받아와 이용 가능 |
 
+- Component가 DOM에서 제거될 시
+  | <center>메서드</center>                                 | <center>설명</center>                                        |
+  | ------------------------------------------------------- | ------------------------------------------------------------ |
+  | `componentWillUnmount()`                                | 컴포넌트가 마운트 해제되어 제거되기 직전 호출                |
 
 ## 4.2 State
 
