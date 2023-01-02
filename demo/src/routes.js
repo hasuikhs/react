@@ -5,6 +5,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 
 const Timer = lazy(() => import('./pages/Timer'));
 const Sse = lazy(() => import('./pages/Sse'));
+const Class = lazy(() => import('./pages/Class'));
 
 const routes = [
   {
@@ -21,6 +22,11 @@ const routes = [
     path: '/sse',
     name: 'SSE',
     element: <Sse />
+  },
+  {
+    path: '/class',
+    name: 'Class',
+    element: <Class />
   },
   {
     path: '*',

@@ -2,6 +2,8 @@
 
 ## 4.1 Component Lifecycle
 
+<img src="./asset/component_lifecycle.jpeg" width="800">
+
 - Component는 여러 기능들을 정해진 순서대로 실행
 
 - Component 초기 생성시
@@ -86,7 +88,7 @@
           }, 1000);
       }; 
       
-  	render() {
+    render() {
           return (
           	<div className="App">
               	{this.state.movies.map((movie, index) => {
