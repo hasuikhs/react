@@ -145,6 +145,15 @@ function Button() {
   - 배열안에 state 값을 넣을 경우: 해당 state 값이 변경될때마다 실행
 - `useEffect` 안에서 사용하는 상태나, props가 있다면 `useEffect`의 두번째 매개변수에 넣어주어야하는 것이 규칙
   - 사용하는 값을 넣어주지 않는다면, useEffect 안의 함수가 실행될 때 최신 상태, prop을 가리키지 않음
+- `useEffect` 안에서 `return`을 사용하여 컴포넌트가 unmount 될 때 호출되게 할 수 있음
+  ```react
+  useEffect(() => {
+    ...
+    return () => {
+      ...
+    }
+  })
+  ```
 
 ### 2.2 useLayoutEffect
 - 기본적인 형태는 `useEffect`와 동일
@@ -265,10 +274,36 @@ function Counter({initialCount}) {
 const memorizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
 ```
 
-- 메모이제이션된 값을 반환, 함수 컴포넌트 내부에서 발생하는 **연산 최적화** 가능
+- 메모이제이션된 **값을 반환**, 함수 컴포넌트 내부에서 발생하는 **연산 최적화** 가능
 - `useMemo`는 의존성이 변경되었을 때에만 다시 계산함
 - 하지만 통상적으로 랜더링 중에는 하지 않는 것은 `useMemo`에서 하지 말고, `useEffect`에서 해야함
 - 배열이 없는 경우에는 매 랜더링마다 새 값을 계산하게 됨
 - `useMemo`는 성능 최적화를 위해 사용 가능하지만, 의미상으로 보장되었다고 생각하지 말 것
   - `useMemo` 함수를 남용하면, 컴포넌트의 복잡도가 올라가기 때문에 코드를 읽기 어려워지고 유지 보수성 저하 가능
-  - 재활용을 위해서 GC에서 제외되기 때문에 메모리를 더 쓸 수 있음
+  - 재활용을 위해서 **GC에서 제외되기 때문에 메모리를 더 쓸 수 있음**
+
+## 6. useCallback
+
+```react
+const memorizedCallback = useCallback(() => do(a, b), [a, b]);
+```
+
+- `useMemo()`와 비슷하지만 값이 아닌 메모이제이션된 **함수를 반환**
+- 컴포넌트가 랜더링될 때마다 매번 함수를 새로 정의하는 것이 아닌 의존성이 변경되었을 때만 함수를 새로 정의하여 반환
+
+```react
+function Example() {
+  // const onClick = event => {
+  //   // 클릭 이벤트
+  // }
+  const onClick = useCallback(() => {
+    // 클릭 이벤트
+  }, []);
+
+  return (
+    <>
+      <button onClick={ onClick }>버튼</button>
+    </>
+  )
+}
+```

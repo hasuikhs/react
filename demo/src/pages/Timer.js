@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 
 const MainDiv = styled.div`
@@ -31,19 +31,19 @@ function Timer() {
 
   const [pause, setPause] = useState(true);
 
-  const startCountdown = () => {
+  const startCountdown = useCallback(() => {
     setPause(false);
     setMinutes(originMinutes);
     setSeconds(originSeconds);
-  }
+  }, [ originMinutes, originSeconds ]);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setOriginMinutes(0);
     setOriginSeconds(0);
-
+  
     setMinutes(0);
     setSeconds(0);
-  }
+  }, []);
 
   useEffect(() => {
     if (originSeconds >= 60) {

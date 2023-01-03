@@ -13,7 +13,8 @@
 
   | <center>메서드</center> | <center>설명</center>                                                                 |
   | ----------------------- | ------------------------------------------------------------------------------------- |
-  | `constructor()`         | Component 생성, 기본 state 정의 가능, 컴포넌트가 마운트되기 전 호출                   |
+  | `constructor()`         | Component 생성, 기본 state 정의 가능, 컴포넌트가 마운트되기 전 호출, 가장 먼저 호출                   |
+  | `static getDerivedStateFromProps(nextProps, prevProps)` | props로 받아온 것을 state에 넣어주고 싶을 때 사용<br> 다른 메서드와는 다르게 `static`을 필요로 하고, 내부에서 `this` 사용 불가능<br>처음 렌더링 되기 전에도 호출 되고, 리렌더링 되기 전에도 매번 실행됨             |
   | `render()`              | Component 랜더링을 담당, 컴포넌트를 DOM에 마운트하기 위해 호출                        |
   | `componentDidMount()`   | Component 출력물이 DOM에 랜더링(마운트) 된 후 실행, `setTimeout()`나 aJax 호출        |
 
@@ -24,11 +25,11 @@
 
   | <center>메서드</center>                                 | <center>설명</center>                                        |
   | ------------------------------------------------------- | ------------------------------------------------------------ |
-  | `static getDerivedStateFromProps(nextProps, prevProps)` | 특정 props가 바뀔 때 설정하려는 state를 객체 형태로 리턴하는 방식으로 사용 |
-  | `shouldComponentUpdate(nextProps, nextState)`           | props, state 값이 볂기 직전에 호출                           |
+  | `static getDerivedStateFromProps(nextProps, prevProps)` | 위와 같음                                                    |
+  | `shouldComponentUpdate(nextProps, nextState)`           | 컴포넌트가 리렌더링 할지 말지를 결정                         |
   | `render()`                                              | Component 랜더링을 담당                                      |
   | `getSnapshotBeforeUpdate(prevProps, prevState)`         | DOM 변화 직전의 실제 DOM 정보를 가져옴                       |
-  | `componentDidUpdate(prevProps, prevState, snapshot)`     | 이 메서드의 실행 시점에 prop과 state가 바뀜, snapshot 파라미터를 이용해서 이전 prevProps와 prevState 값을 받아와 이용 가능 |
+  | `componentDidUpdate(prevProps, prevState, snapshot)`    | 이 메서드의 실행 시점에 prop과 state가 바뀜, snapshot 파라미터를 이용해서 이전 prevProps와 prevState 값을 받아와 이용 가능 |
 
 - Component가 DOM에서 제거될 시
   | <center>메서드</center>                                 | <center>설명</center>                                        |
