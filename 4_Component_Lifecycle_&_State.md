@@ -1,6 +1,7 @@
 # 4. Component Lifecycle & State
 
-## 4.1 Component Lifecycle
+## 4.1 Component Lifecycle - Class
+### 4.1.1 Class
 
 <img src="./asset/component_lifecycle.jpeg" width="800">
 
@@ -36,6 +37,9 @@
   | ------------------------------------------------------- | ------------------------------------------------------------ |
   | `componentWillUnmount()`                                | 컴포넌트가 마운트 해제되어 제거되기 직전 호출                |
 
+
+### 4.1.2 Hook
+<img src="./asset/hook_lifecycle.png" width="800">
 ## 4.2 State
 
 - 기존의 코드
