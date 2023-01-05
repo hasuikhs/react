@@ -4,34 +4,22 @@ const sseUrl = 'http://localhost:3030';
 
 function Sse() {
   const [serverTime, setServerTime] = useState(Date.now().toString());
+  const es = new EventSource(`${ sseUrl }/alarm`);
+  let count = null;
 
   const sseAlarm = () => {
-    const originPath = window.location.pathname;
-    const es = new EventSource(`${ sseUrl }/alarm`);
-    
-    window.addEventListener('beforeunload', () => {
-      es.close();
-    });
-
     es.addEventListener('message', event => {
       const { data } = event;
-      if (originPath !== window.location.pathname) {
-        es.close();
-      }
+
       setServerTime(data);
     });
 
-    es.addEventListener('error', event => {
+    es.addEventListener('error', () => {
       console.log('error')
       es.close();
     });
 
-    setTimeout(() => {
-      if (es.readyState === 2) {
-        console.log('already close');
-        return;
-      };
-
+    count = setTimeout(() => {
       console.log('close')
       es.close();
     }, 5_000);
@@ -39,7 +27,12 @@ function Sse() {
 
   useEffect(() => {
     sseAlarm();
-  }, [])
+
+    return () => {
+      clearTimeout(count);
+      es.close();
+    }
+  }, []);
 
   return (
     <>
