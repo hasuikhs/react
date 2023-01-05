@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 const sseUrl = 'http://localhost:3030';
+const es = new EventSource(`${ sseUrl }/alarm`);
 
 function Sse() {
   const [serverTime, setServerTime] = useState(Date.now().toString());
-  const es = new EventSource(`${ sseUrl }/alarm`);
   let count = null;
 
   const sseAlarm = () => {
@@ -15,12 +15,12 @@ function Sse() {
     });
 
     es.addEventListener('error', () => {
-      console.log('error')
+      console.log('error');
       es.close();
     });
 
     count = setTimeout(() => {
-      console.log('close')
+      console.log('close');
       es.close();
     }, 5_000);
   };
