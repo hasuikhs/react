@@ -1,35 +1,29 @@
 import { useEffect, useState } from 'react';
 
 const sseUrl = 'http://localhost:3030';
-const es = new EventSource(`${ sseUrl }/alarm`);
 
 function Sse() {
   const [serverTime, setServerTime] = useState(Date.now().toString());
-  let count = null;
-
-  const sseAlarm = () => {
-    es.addEventListener('message', event => {
-      const { data } = event;
-
-      setServerTime(data);
-    });
-
-    es.addEventListener('error', () => {
-      console.log('error');
-      es.close();
-    });
-
-    count = setTimeout(() => {
-      console.log('close');
-      es.close();
-    }, 5_000);
-  };
 
   useEffect(() => {
-    sseAlarm();
+    const es = new EventSource(`${ sseUrl }/alarm`);
+    const limitTimer = setTimeout(() => {
+      console.log('sse close');
+      es.close();
+    }, 5_000);
+
+    es.onmessage = event => {
+      const { data } = event;
+      setServerTime(data);
+    }
+
+    es.onerror = () => {
+      console.log('sse error');
+      es.close();
+    }
 
     return () => {
-      clearTimeout(count);
+      clearTimeout(limitTimer);
       es.close();
     }
   }, []);
