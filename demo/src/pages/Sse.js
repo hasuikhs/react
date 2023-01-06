@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 const sseUrl = 'http://localhost:3030';
 
 function Sse() {
-  const [serverTime, setServerTime] = useState(Date.now().toString());
+  const [serverTime, setServerTime] = useState(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const es = new EventSource(`${ sseUrl }/alarm`);
     const limitTimer = setTimeout(() => {
       console.log('sse close');
@@ -29,9 +29,9 @@ function Sse() {
   }, []);
 
   return (
-    <>
+    <h1>
       { Date(serverTime * 1) }
-    </>
+    </h1>
   );
 }
 
