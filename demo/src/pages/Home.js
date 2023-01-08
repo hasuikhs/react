@@ -8,16 +8,25 @@ const MainDiv = styled.div`
   flex-direction: column;
 `;
 
-const Button = styled.button`
-  color: gray;
-`;
-
 function Home() {
   return (
     <MainDiv>
       연습장
       {
-        routes.map(v => <Link key={ v.name } to={ v.path }>{ v.name }</Link>)
+        routes.map(route => {
+          return !route.children
+                  ? <Link key={ route.name } to={ route.path }>{ route.name }</Link>
+                  : (
+                    <>
+                      <div>{ route.name }</div>
+                      {
+                        route.children.map((childrenRoute, index) => {
+                          return <li><Link key={ route.path + childrenRoute.path } to={ route.path + childrenRoute.path } >{ childrenRoute.name }</Link></li>;
+                        })
+                      }
+                    </>
+                  )
+        })
       }
     </MainDiv>
   )

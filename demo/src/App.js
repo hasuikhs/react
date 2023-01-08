@@ -12,7 +12,11 @@ function App() {
           <Routes>
             {
               routes.map(route => {
-                return <Route key={ route.path } path={ route.path } element={ route.element } />
+                return !route.children
+                        ? <Route key={ route.path } path={ route.path } element={ route.element } />
+                        : route.children.map(childRoute => {
+                          return <Route key={ route.path + childRoute.path } path={ route.path + childRoute.path } element={ childRoute.element } />
+                        })
               })
             }
           </Routes>

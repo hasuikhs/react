@@ -6,7 +6,10 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const Timer = lazy(() => import('./pages/Timer'));
 const Sse = lazy(() => import('./pages/Sse'));
 const Class = lazy(() => import('./pages/Class'));
-const WebGL = lazy(() => import('./pages/WebGL'));
+const Resizer = lazy(() => import('./pages/Resizer'));
+
+// webgl
+const Basic = lazy(() => import('./pages/WebGL/Basic'));
 
 const routes = [
   {
@@ -30,9 +33,20 @@ const routes = [
     element: <Class />
   },
   {
+    path: '/resizer',
+    name: 'Resizer',
+    element: <Resizer />
+  },
+  {
     path: '/webgl',
     name: 'WebGL',
-    element: <WebGL />
+    children: [
+      {
+        path: '/basic',
+        name: 'Basic',
+        element: <Basic />
+      }
+    ]
   },
   {
     path: '*',
