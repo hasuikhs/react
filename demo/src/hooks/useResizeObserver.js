@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const useResizeObserver = targetEl => {
-  console.log('init', targetEl)
   const observerRef = useRef(null);
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
   const getObserver = useCallback(() => {
-    console.log(observerRef)
     if (!observerRef.current) {
       observerRef.current = new ResizeObserver(entries => {
         const target = entries.find(entry => entry.target === targetEl.current);
