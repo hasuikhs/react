@@ -1,9 +1,12 @@
 import { useRef } from 'react';
-import useResizeObserver from '../hooks/useResizeObserver';
+import { useResizeObserver, useWindowSize } from '../hooks/useResizeObserver';
 
 function Resizer() {
   const areaRef = useRef(null);
-  const [width, height] = useResizeObserver(areaRef);
+  const [width, height] = useResizeObserver(areaRef, {
+    optimizeType: 'throttle',
+    ms: 1_000
+  });
 
   return (
     <>
