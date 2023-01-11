@@ -5,9 +5,7 @@ import routes from '../routes';
 
 const MainContainer = styled.div`
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
   margin: 10px;
   width: 900px;
 `;
