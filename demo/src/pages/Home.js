@@ -34,17 +34,17 @@ function Home() {
           routes.map(route => {
             return !route.children
                     ? (
-                        <Card>
+                        <Card key={ route.name + '_card' }>
                           <Link key={ route.name } to={ route.path }>{ route.name }</Link>
                         </Card>
                       )
                     : (
-                        <Card>
+                        <Card key={ route.name + '_card' }>
                           { route.name }
                           <ul>
                             {
                               route.children.map((childrenRoute, index) => {
-                                return <li><Link key={ route.path + childrenRoute.path } to={ route.path + childrenRoute.path } >{ childrenRoute.name }</Link></li>
+                                return <li key={ route.path + childrenRoute.path }><Link key={ route.path + childrenRoute.path } to={ route.path + childrenRoute.path } >{ childrenRoute.name }</Link></li>
                               })
                             }
                           </ul>
