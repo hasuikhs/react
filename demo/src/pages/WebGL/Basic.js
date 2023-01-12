@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { useLayoutEffect, useEffect, useRef } from 'react';
+import { useLayoutEffect, useEffect, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import { useResizeObserver } from '../../hooks/useResizeObserver';
 
@@ -23,19 +23,21 @@ const CanvasContainer = styled.div`
 `;
 
 function Basic() {
-
   const targetRef = useRef(null);
-  const [width, height] = useResizeObserver(targetRef);
+  const [width, height] = useResizeObserver(targetRef, {
+    optimmizeType: 'debounce',
+    ms: 10000
+  });
 
   // 장면/무대
-  const scene = new THREE.Scene();
+  const scene = useMemo(() => new THREE.Scene(), []);
 
   // 시야각을 가진 카메라
-  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  const camera = useMemo(() => new THREE.PerspectiveCamera(75, width / height, 0.1, 1000), []);
 
   // 화면에 그려주는 객체
   // 카메라로 보여주는 장면
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  const renderer = useMemo(() => new THREE.WebGLRenderer({ antialias: true }), []);
 
   useLayoutEffect(() => {
     renderer.setSize(width, height);
@@ -76,8 +78,8 @@ function Basic() {
   }, []);
 
   useEffect(() => {
+    console.log(width, height)
     if (width && height) {
-      console.log('width, height 변경', width, height)
       renderer.setSize(width, height);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();

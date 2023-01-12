@@ -18,14 +18,14 @@ const useResizeObserver = (targetEl, option = undefined) => {
 
   const getObserver = useCallback(() => {
     const optimizeType = option?.optimizeType || null;
-    const delyMillis = option?.ms || 0;
+    const delayMillis = option?.ms || 0;
 
     if (!observerRef.current) {
       observerRef.current = new ResizeObserver(
         optimizeType === 'throttle'
-          ? throttle(handler, delyMillis)
+          ? throttle(handler, delayMillis)
           : optimizeType === 'debounce'
-            ? debounce(handler, delyMillis)
+            ? debounce.bind(handler, delayMillis)
             : handler
       );
     }

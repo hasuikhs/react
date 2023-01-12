@@ -4,8 +4,8 @@ import { useResizeObserver, useWindowSize } from '../hooks/useResizeObserver';
 function Resizer() {
   const areaRef = useRef(null);
   const [width, height] = useResizeObserver(areaRef, {
-    optimizeType: 'throttle',
-    ms: 1_000
+    optimizeType: 'debounce',
+    ms: 10000
   });
 
   return (
