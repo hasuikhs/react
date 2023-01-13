@@ -33,7 +33,19 @@ function Basic() {
   const scene = useMemo(() => new THREE.Scene(), []);
 
   // 시야각을 가진 카메라
-  const camera = useMemo(() => new THREE.PerspectiveCamera(75, width / height, 0.1, 1000), []);
+  const camera = useMemo(() => {
+    // PerspectiveCamera (원근 카메라)
+    return new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    // OrthographicCamera (직교 카메라): 객체의 크기가 카메라와의 거리에 관계없이 일정하게 유지, 게임 롤 뷰
+    // return new THREE.OrthographicCamera(
+    //   -(width / height),
+    //   width / height,
+    //   1,
+    //   -1,
+    //   0.1,
+    //   1000
+    // );
+  }, []);
 
   // 화면에 그려주는 객체
   // 카메라로 보여주는 장면
@@ -46,14 +58,16 @@ function Basic() {
 
     // 모양(geometry) + 재질(material) = mesh
     // 3d 모델 각각의 오브젝트를 mesh라 함
-    const geometry = new THREE.BoxGeometry();
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshBasicMaterial({
-      color: 0x00ff00
+      color: '#00ff00'
     });
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
     camera.position.z = 5;
+    camera.zoom = 0.5;
+    // camera.lookAt(0, 0, 0);
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -78,14 +92,17 @@ function Basic() {
   }, []);
 
   useEffect(() => {
-    console.log(width, height)
     if (width && height) {
       renderer.setSize(width, height);
-      camera.aspect = width / height;
+
+      if (camera.aspect) {
+        camera.aspect = width / height;
+      } else {
+        camera.left = - (width / height);
+        camera.right = width / height;
+      }
       camera.updateProjectionMatrix();
   
-      renderer.render(scene, camera);
-
     }
   }, [width, height]);
 
