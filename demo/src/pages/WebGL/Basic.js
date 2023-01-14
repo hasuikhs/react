@@ -35,7 +35,7 @@ function Basic() {
   // 시야각을 가진 카메라
   const camera = useMemo(() => {
     // PerspectiveCamera (원근 카메라)
-    return new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    return new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     // OrthographicCamera (직교 카메라): 객체의 크기가 카메라와의 거리에 관계없이 일정하게 유지, 게임 롤 뷰
     // return new THREE.OrthographicCamera(
     //   -(width / height),
@@ -53,6 +53,7 @@ function Basic() {
 
   useLayoutEffect(() => {
     renderer.setSize(width, height);
+    console.log(width, height)
 
     targetRef.current.appendChild(renderer.domElement);
 
@@ -66,8 +67,7 @@ function Basic() {
     scene.add(cube);
 
     camera.position.z = 5;
-    camera.zoom = 0.5;
-    // camera.lookAt(0, 0, 0);
+    camera.lookAt(0, 0, 0);
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -83,12 +83,6 @@ function Basic() {
     }
 
     animate();
-
-    return () => {
-      if (targetRef.current) {
-        targetRef.current.removeChild(renderer.domElement);
-      }
-    }
   }, []);
 
   useEffect(() => {
