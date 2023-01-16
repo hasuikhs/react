@@ -10,6 +10,7 @@ const Resizer = lazy(() => import('./pages/Resizer'));
 
 // webgl
 const Basic = lazy(() => import('./pages/WebGL/Basic'));
+const Fog = lazy(() => import('./pages/WebGL/Fog'));
 
 const routes = [
   {
@@ -45,6 +46,11 @@ const routes = [
         path: '/basic',
         name: 'Basic',
         element: <Basic />
+      },
+      {
+        path: '/fog',
+        name: 'Fog',
+        element: <Fog />
       }
     ]
   },
