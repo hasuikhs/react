@@ -50,6 +50,7 @@ function Timer() {
       setOriginMinutes(originMinutes + parseInt(originSeconds / 60));
       setOriginSeconds(originSeconds % 60);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [originSeconds]);
 
   useEffect(() => {

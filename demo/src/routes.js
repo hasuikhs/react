@@ -7,6 +7,7 @@ const Timer = lazy(() => import('./pages/Timer'));
 const Sse = lazy(() => import('./pages/Sse'));
 const Class = lazy(() => import('./pages/Class'));
 const Resizer = lazy(() => import('./pages/Resizer'));
+const Search = lazy(() => import('./pages/Search'));
 
 // webgl
 const Basic = lazy(() => import('./pages/WebGL/Basic'));
@@ -53,6 +54,11 @@ const routes = [
         element: <Fog />
       }
     ]
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    element: <Search />
   },
   {
     path: '*',

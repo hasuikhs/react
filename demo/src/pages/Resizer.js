@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useResizeObserver, useWindowSize } from '../hooks/useResizeObserver';
+import { useResizeObserver } from '../hooks/useResizeObserver';
 
 function Resizer() {
   const areaRef = useRef(null);

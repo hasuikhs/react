@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as THREE from 'three';
 import { useLayoutEffect, useEffect, useRef, useMemo } from 'react';
 import styled from 'styled-components';
@@ -95,14 +96,10 @@ function Basic() {
     // camera.lookAt(0, 0, 0);
 
 
-    const clock = new THREE.Clock();
-
     let isPlus = true;
 
     const animate = () => {
       // 경과 시간
-      const time = clock.getElapsedTime();
-
       // requestAnimationFrame(animate);
       renderer.setAnimationLoop(animate);
 
