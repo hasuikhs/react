@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { setLocalData, getLocalData } from '../utils/localStorage';
 
 function Search() {
@@ -20,10 +20,10 @@ function Search() {
       dataBody: keyword
     });
 
-    console.log(getLocalData({
+    getLocalData({
       storageKey: 'keyword',
       dataKey: 'searchKey'
-    }));
+    });
   }
 
   useEffect(() => {
