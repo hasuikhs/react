@@ -5,7 +5,7 @@ function Resizer() {
   const areaRef = useRef(null);
   const [width, height] = useResizeObserver(areaRef, {
     optimizeType: 'debounce',
-    ms: 10000
+    ms: 1000
   });
 
   return (

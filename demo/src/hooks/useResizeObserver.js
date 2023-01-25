@@ -26,7 +26,7 @@ const useResizeObserver = (targetEl, option = undefined) => {
         optimizeType === 'throttle'
           ? throttle(handler, delayMillis)
           : optimizeType === 'debounce'
-            ? debounce.bind(handler, delayMillis)
+            ? debounce(handler, delayMillis)
             : handler
       );
     }
