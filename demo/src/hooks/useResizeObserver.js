@@ -2,7 +2,7 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { throttle, debounce } from 'lodash';
 
-const useResizeObserver = (targetEl, option = undefined) => {
+const useResizeObserver = (targetEl, { optimizeType, ms }) => {
   const observerRef = useRef(null);
 
   const [width, setWidth] = useState(0);
@@ -18,14 +18,14 @@ const useResizeObserver = (targetEl, option = undefined) => {
   }
 
   const getObserver = useCallback(() => {
-    const optimizeType = option?.optimizeType || null;
-    const delayMillis = option?.ms || 0;
+    const optType = optimizeType || null;
+    const delayMillis = ms || 0;
 
     if (!observerRef.current) {
       observerRef.current = new ResizeObserver(
-        optimizeType === 'throttle'
+        optType === 'throttle'
           ? throttle(handler, delayMillis)
-          : optimizeType === 'debounce'
+          : optType === 'debounce'
             ? debounce(handler, delayMillis)
             : handler
       );
