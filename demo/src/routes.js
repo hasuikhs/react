@@ -8,6 +8,7 @@ const Sse = lazy(() => import('./pages/Sse'));
 const Class = lazy(() => import('./pages/Class'));
 const Resizer = lazy(() => import('./pages/Resizer'));
 const Search = lazy(() => import('./pages/Search'));
+const Window = lazy(() => import('./pages/Window'));
 
 // webgl
 const Basic = lazy(() => import('./pages/WebGL/Basic'));
@@ -59,6 +60,11 @@ const routes = [
     path: '/search',
     name: 'Search',
     element: <Search />
+  },
+  {
+    path: '/window',
+    name: 'Window',
+    element: <Window />
   },
   {
     path: '*',
