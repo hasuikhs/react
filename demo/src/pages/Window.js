@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useLocalStorage } from '../hooks/useStorage';
 
 function Window() {
-  const [local, setLocal] = useLocalStorage('test')
+  const [local, setLocal] = useLocalStorage({ key: 'test' })
 
   const test = () => {
     console.log('test')
@@ -11,7 +11,7 @@ function Window() {
   useEffect(() => {
     window.addEventListener('resize', test);
 
-    setLocal('test')
+    console.log(local)
 
     return () => window.removeEventListener('resize', test);
   }, [])
