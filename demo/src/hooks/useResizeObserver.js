@@ -2,7 +2,7 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { throttle, debounce } from 'lodash';
 
-const useResizeObserver = (targetEl, { optimizeType, ms }) => {
+const useResizeObserver = ({ targetEl, optimizeType, ms }) => {
   const observerRef = useRef(null);
 
   const [width, setWidth] = useState(0);

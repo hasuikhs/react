@@ -1,11 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocalStorage } from '../hooks/useStorage';
 
 function Window() {
   const [local, setLocal] = useLocalStorage({ key: 'test' })
+  const inputRef = useRef();
 
   const test = () => {
     console.log('test')
+  }
+
+  const onChange = () => {
+    console.log(inputRef.current.value)
   }
   
   useEffect(() => {
@@ -18,6 +23,7 @@ function Window() {
 
   return (
     <>
+      <input type="text" ref={ inputRef }onChange={ onChange } />
     </>
   )
 }

@@ -3,7 +3,8 @@ import { useResizeObserver } from '../hooks/useResizeObserver';
 
 function Resizer() {
   const areaRef = useRef(null);
-  const [width, height] = useResizeObserver(areaRef, {
+  const [width, height] = useResizeObserver({
+    targetEl: areaRef,
     optimizeType: 'debounce',
     ms: 1000
   });
