@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useRef, useEffect } from 'react';
 
-const useMutationObserver = ({ targetEl, callback, config }) => {
+const useMutationObserver = (targetEl, config, callback) => {
   const observerRef = useRef(null);
 
   const getObserver = useCallback(() => {
