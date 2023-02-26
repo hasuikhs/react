@@ -38,3 +38,20 @@ $ yarn add @tanstack/react-query @tanstack/react-query-devtools
     );
   }
   ```
+#### 2.2.1 useQuery
+- 데이터를 get하기 위한 api
+- 첫번째 파라미터로 queryKey 값이 들어가고
+  - key는 다른 컴포넌트에서도 사용하면 호출 가능
+  - 단순하게 문자열로 사용 가능하나 배열의 형태로도 사용 가능
+  ```javascript
+  const res = useQuery('string', queryFn);
+
+  const res = useQuery(['string1', 'string2'], queryFn);
+  ```
+  - React Quqery가 query 캐싱을 관리 가능하게 도와줌
+    - 동일한 queryKey를 사용하여 서버에 조회한다면, 요청이 여러개 발생하는 것이 아닌 1개의 요청만 일어남
+    - queryFn이 다르게 정의되었더라도 같은 결과를 전달 받음
+- 두번째 파라미터로 비동기 함수 queryFn (promise)
+- return 값은 api의 성공, 실패, api return 값을  포함한 객체
+- `useQuery`는 **비동기**로 작동하므로, 한 컴포넌트 내에 여러개의 `useQuery`가 존재한다면 동시에 실행됨
+  - 여러개의 비동기 쿼리를 사용한다면 `useQueris`를 추천
