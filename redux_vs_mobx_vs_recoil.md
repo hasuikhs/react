@@ -34,86 +34,6 @@
     - `react-redux` 라이브러리의 `connect` 함수를 사용하여 구현됨
     - 스토어로부터 상태를 가져와 컴포넌트에 전달하고, 필요한 Action을 Dispatch하여 상태 업데이트 가능
 
-```javascript
-import { createStore } from 'redux';
-import { connect, Provider } from 'react-redux';
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-// 액션 타입 정의
-const INCREMENT = 'INCREMENT';
-const DECREMENT = 'DECREMENT';
-
-// 액션 생성자 함수
-const incrementAction = () => {
-  return { type: INCREMENT };
-};
-
-const decrementAction = () => {
-  return { type: DECREMENT };
-};
-
-// 리듀서 함수
-const counterReducer = (state = 0, action) => {
-  switch (action.type) {
-    case INCREMENT:
-      return state + 1;
-    case DECREMENT:
-      return state - 1;
-    default:
-      return state;
-  }
-};
-
-// 스토어 생성
-const store = createStore(counterReducer);
-
-// 카운터 컴포넌트
-@connect(mapStateToProps, mapDispatchToProps)
-class Counter extends React.Component {
-  render() {
-    const { count, increment, decrement } = this.props;
-
-    return (
-      <div>
-        <h1>카운터: {count}</h1>
-        <button onClick={increment}>증가</button>
-        <button onClick={decrement}>감소</button>
-      </div>
-    );
-  }
-}
-
-// mapStateToProps: 스토어의 상태를 컴포넌트의 props로 매핑
-const mapStateToProps = (state) => {
-  return {
-    count: state,
-  };
-};
-
-// mapDispatchToProps: 액션을 디스패치하는 함수를 컴포넌트의 props로 매핑
-const mapDispatchToProps = (dispatch) => {
-  return {
-    increment: () => dispatch(incrementAction()),
-    decrement: () => dispatch(decrementAction()),
-  };
-};
-
-// 애플리케이션 컴포넌트
-class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Counter />
-      </Provider>
-    );
-  }
-}
-
-// 애플리케이션 렌더링
-ReactDOM.render(<App />, document.getElementById('root'));
-```
-
 - 기본 동작 방식
   1. Action을 Dispatch
   2. Dispatch된 Action은 Reducer에 전달
@@ -121,6 +41,88 @@ ReactDOM.render(<App />, document.getElementById('root'));
   4. 변경된 상태는 Store에 저장
   5. Store에 저장된 상태는 `connect`를 통해 연결된 컴포넌트에 전달
   6. 컴포넌트는 변경된 상태를 기반으로 렌더링
+
+- 예시
+  ```javascript
+  import { createStore } from 'redux';
+  import { connect, Provider } from 'react-redux';
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+
+  // 액션 타입 정의
+  const INCREMENT = 'INCREMENT';
+  const DECREMENT = 'DECREMENT';
+
+  // 액션 생성자 함수
+  const incrementAction = () => {
+    return { type: INCREMENT };
+  };
+
+  const decrementAction = () => {
+    return { type: DECREMENT };
+  };
+
+  // 리듀서 함수
+  const counterReducer = (state = 0, action) => {
+    switch (action.type) {
+      case INCREMENT:
+        return state + 1;
+      case DECREMENT:
+        return state - 1;
+      default:
+        return state;
+    }
+  };
+
+  // 스토어 생성
+  const store = createStore(counterReducer);
+
+  // mapStateToProps: 스토어의 상태를 컴포넌트의 props로 매핑
+  const mapStateToProps = (state) => {
+    return {
+      count: state,
+    };
+  };
+
+  // mapDispatchToProps: 액션을 디스패치하는 함수를 컴포넌트의 props로 매핑
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      increment: () => dispatch(incrementAction()),
+      decrement: () => dispatch(decrementAction()),
+    };
+  };
+
+  // 카운터 컴포넌트
+  @connect(mapStateToProps, mapDispatchToProps)
+  class Counter extends React.Component {
+    render() {
+      const { count, increment, decrement } = this.props;
+
+      return (
+        <div>
+          <h1>카운터: {count}</h1>
+          <button onClick={increment}>증가</button>
+          <button onClick={decrement}>감소</button>
+        </div>
+      );
+    }
+  }
+
+
+  // 애플리케이션 컴포넌트
+  class App extends React.Component {
+    render() {
+      return (
+        <Provider store={store}>
+          <Counter />
+        </Provider>
+      );
+    }
+  }
+
+  // 애플리케이션 렌더링
+  ReactDOM.render(<App />, document.getElementById('root'));
+  ```
 
 ## 2. Mobx
 ## 3. Recoil
