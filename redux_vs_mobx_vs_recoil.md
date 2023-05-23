@@ -124,5 +124,62 @@
   ReactDOM.render(<App />, document.getElementById('root'));
   ```
 
-## 2. Mobx
+## 2. MobX
+- MoxX는 간단하고 직관적인 API를 제공하여 상태 변화를 감지하고 관리하는데 도움을 줌
+- 반응적이고 관찰 가능한 상태를 생성하며, 이러한 상태에 대한 변경을 자동으로 추적하여 UI를 업데이트
+- 핵심 개념
+  - `Observables`
+    - 상태를 관찰 가능한 상태로 변환하기 위해 `observable` 함수를 사용
+    - 관찰 가능한 상태는 MobX가 상태 변경을 자동으로 추적 가능한 객체
+  - `Actions`
+    - 상태를 변경하는 로직을 액션으로 정의
+    - 액션은 MobX의 `action` 함수를 사용하여 정의 가능하며, 상태 변경을 수행하는 메서드나 함수
+  - `Reactions`
+    - 상태의 변경을 감지하고 이에 따라 반응하는 코드 작성 가능
+    - `computed` 함수를 사용하여 계산된 값을 정의 가능하며, 해당 값은 의존하는 상태가 변경될 때 자동으로 재계산
+  - `Observers`
+    - UI나 다른 코드에서 MobX 상태 관찰 가능
+    - `observer` 함수를 사용하여 관찰자 컴포넌트를 생성 가능하며, 관찰 가능한 상태에 의존하는 컴포넌트를 자동으로 업데이트
+- 예시
+  ```javascript
+  import { observable, action, computed } from 'mobx';
+  import { observer } from 'mobx-react';
+
+  class CounterStore {
+    @observable count = 0;
+
+    @action increment() {
+      this.count++;
+    }
+
+    @action decrement() {
+      this.count--;
+    }
+
+    @computed get doubledCount() {
+      return this.count * 2;
+    }
+  }
+
+  const counterStore = new CounterStore();
+
+  @observer
+  class Counter extends React.Component {
+    render() {
+      const { count, increment, decrement, doubledCount } = counterStore;
+
+      return (
+        <div>
+          <h1>카운터: {count}</h1>
+          <h2>더블 카운터: {doubledCount}</h2>
+          <button onClick={increment}>증가</button>
+          <button onClick={decrement}>감소</button>
+        </div>
+      );
+    }
+  }
+
+  ReactDOM.render(<Counter />, document.getElementById('root'));
+  ```
+
 ## 3. Recoil
