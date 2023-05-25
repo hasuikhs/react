@@ -118,7 +118,7 @@ function Button() {
 - `useEffect` Hook에 입력하는 함수를 부수 효과 함수라 함
   - 이 함수는 렌더링 결과가 **실제 돔에 반영된 후 호출**되고, 컴포넌트가 사라지기 직전에 마지막으로 호출
 
-```react
+```javascript
 import React, { useState, useEffect } from 'react';
 
 function Button() {
@@ -146,7 +146,7 @@ function Button() {
 - `useEffect` 안에서 사용하는 상태나, props가 있다면 `useEffect`의 두번째 매개변수에 넣어주어야하는 것이 규칙
   - 사용하는 값을 넣어주지 않는다면, useEffect 안의 함수가 실행될 때 최신 상태, prop을 가리키지 않음
 - `useEffect` 안에서 `return`을 사용하여 컴포넌트가 unmount 될 때 호출되게 할 수 있음
-  ```react
+  ```javascript
   useEffect(() => {
     ...
     return () => {
@@ -170,7 +170,7 @@ function Button() {
   - 즉, A, B, C 컴포넌트가 각각 부모자식 관계일 때, A에서 C로 데이터를 주려면 B를 거쳐야 했음
   - 이 문제를 해결하기 위해서는 보통 Redux를 사용했지만, `useContext`로 대체 가능해짐
 
-```react
+```javascript
 // App.js
 import React, { useState } from 'react';
 import Button from './component/button'
@@ -193,7 +193,7 @@ export default App;
 export { UserContext };
 ```
 
-```react
+```javascript
 // component/button.js
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../App';
@@ -223,7 +223,7 @@ function Button() {
     
 ## 4. useReducer
 
-```react
+```javascript
 const [state, dispatch] = useReducer(reducer, initialArg, init);
 ```
 
@@ -234,7 +234,7 @@ const [state, dispatch] = useReducer(reducer, initialArg, init);
   - 상태 업데이트 로직을 컴포넌트 바깥에 작성 가능하고, 다른 파일에 작성 후 로드 가능
 
 
-```react
+```javascript
 // 초기화 지연
 function init(initialCount) {
   return {count: initialCount};
@@ -270,7 +270,7 @@ function Counter({initialCount}) {
 
 ## 5. useMemo
 
-```react
+```javascript
 const memorizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
 ```
 
@@ -284,14 +284,14 @@ const memorizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
 
 ## 6. useCallback
 
-```react
+```javascript
 const memorizedCallback = useCallback(() => do(a, b), [a, b]);
 ```
 
 - `useMemo()`와 비슷하지만 값이 아닌 메모이제이션된 **함수를 반환**
 - 컴포넌트가 랜더링될 때마다 매번 함수를 새로 정의하는 것이 아닌 의존성이 변경되었을 때만 함수를 새로 정의하여 반환
 
-```react
+```javascript
 function Example() {
   // const onClick = event => {
   //   // 클릭 이벤트

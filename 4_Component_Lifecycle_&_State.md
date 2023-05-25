@@ -44,7 +44,7 @@
 
 - 기존의 코드
 
-  ```react
+  ```javascript
   const movies = [
       {
           title: 'movie 1',
@@ -68,7 +68,7 @@
 
 - state 사용
 
-  ```react
+  ```javascript
   class App extends Component {
       
       state = {
@@ -112,7 +112,7 @@
 
   - 처음부터 데이터가 존재하지 않으므로 처음 스피너나 Loading 문구 등을 넣을 수 있음
 
-  ```react
+  ```javascript
   class App extends Component {
       
       state = {};

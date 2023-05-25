@@ -4,7 +4,7 @@
 
   - state가 존재하는 Component
 
-  ```react
+  ```javascript
   class MoviePoster extends Component {
       static propTypes = {
           poster: PropTypes.string.isRequired
@@ -23,7 +23,7 @@
   - state가 존재하지 않는 Component
   - 오로지 **html return만을 하기 위한 Component**를 작성할때 유용
 
-  ```react
+  ```javascript
   function MoviePoster({poster}) {
       return (
       	<img src={poster} alt="Movie Poster" />

@@ -2,7 +2,7 @@
 
 ## 1.  기본
 
-```react
+```javascript
 import Movie from './Movie';
 
 const movieTitles = [
@@ -33,7 +33,7 @@ class App extends Component {
 }
 ```
 
-```react
+```javascript
 class Movie extends Component {
     render() {
         return (
@@ -62,7 +62,7 @@ class MoviePoster extends Component {
 
 - 특정 API를 쳐서 json 형태의 데이터가 반환될 경우
 
-```react
+```javascript
 const movies = [
     {
         title: 'movie 1',
@@ -101,7 +101,7 @@ class App extends Component {
 
 - Movie.js 변경
 
-  ```react
+  ```javascript
   import PropTypes from 'prop-types';
   
   class Movie extends Component {

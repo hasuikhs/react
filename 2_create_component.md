@@ -8,7 +8,7 @@
 </body>
 ```
 
-```react
+```javascript
 // index.js
 import React from 'react';			// react는 라이브러리
 import ReactDOM from 'react-dom';	// reactDOM은 웹사이트에 render를 돕는 모델
@@ -21,7 +21,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 - ReactDOM이 id="root" 자리에  App을 render
   - ReactDom은 1개의 Component를 render
 
-```react
+```javascript
 // App.js
 import React, { Component } from 'react';
 import './App.css';
