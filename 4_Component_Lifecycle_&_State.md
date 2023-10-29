@@ -29,7 +29,7 @@
   | `static getDerivedStateFromProps(nextProps, prevProps)` | 위와 같음                                                    |
   | `shouldComponentUpdate(nextProps, nextState)`           | 컴포넌트가 리렌더링 할지 말지를 결정                         |
   | `render()`                                              | Component 랜더링을 담당                                      |
-  | `getSnapshotBeforeUpdate(prevProps, prevState)`         | DOM 변화 직전의 실제 DOM 정보를 가져옴                       |
+  | `getSnapshotBeforeUpdate(prevProps, prevState)`         | DOM 변화 직전의 실제 DOM 정보를 가져옴, ComponentDidUpdate 전에 실행, 스크롤 위치 등을 저장하는데 유용하게 사용 가능 <br> 16.3 버전에서 추가                       |
   | `componentDidUpdate(prevProps, prevState, snapshot)`    | 이 메서드의 실행 시점에 prop과 state가 바뀜, snapshot 파라미터를 이용해서 이전 prevProps와 prevState 값을 받아와 이용 가능 |
 
 - Component가 DOM에서 제거될 시
@@ -149,5 +149,3 @@
       }
   }
   ```
-
-  
