@@ -14,7 +14,7 @@
 
   | <center>메서드</center> | <center>설명</center>                                                                 |
   | ----------------------- | ------------------------------------------------------------------------------------- |
-  | `constructor()`         | Component 생성, 기본 state 정의 가능, 컴포넌트가 마운트되기 전 호출, 가장 먼저 호출                   |
+  | `constructor()`         | Component 생성, 기본 state 정의 가능, 컴포넌트가 마운트되기 전 호출, 가장 먼저 호 <br> 브라우저의 뒤로 가기 이동시에는 실행되지 않고 `componentDidMount`, `componentDidUpdate` 가 실행 됨                   |
   | `static getDerivedStateFromProps(nextProps, prevProps)` | props로 받아온 것을 state에 넣어주고 싶을 때 사용<br> 다른 메서드와는 다르게 `static`을 필요로 하고, 내부에서 `this` 사용 불가능<br>처음 렌더링 되기 전에도 호출 되고, 리렌더링 되기 전에도 매번 실행됨             |
   | `render()`              | Component 랜더링을 담당, 컴포넌트를 DOM에 마운트하기 위해 호출                        |
   | `componentDidMount()`   | Component 출력물이 DOM에 랜더링(마운트) 된 후 실행, `setTimeout()`나 aJax 호출        |
