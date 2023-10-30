@@ -40,6 +40,7 @@
 
 ### 4.1.2 Hook
 <img src="./asset/hook_lifecycle.png" width="800">
+
 ## 4.2 State
 
 - 기존의 코드
