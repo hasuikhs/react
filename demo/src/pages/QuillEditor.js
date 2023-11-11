@@ -3,7 +3,7 @@ import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import './memoEditor.scss';
 
-class MemoEditor extends Component {
+class QuillEditor extends Component {
   constructor(props) {
     super(props);
 
@@ -73,7 +73,7 @@ class MemoEditor extends Component {
 
   render() {
     return (
-      <div id="editor" spellCheck={false} style={{ position: 'absolute', width: '200px', height: '200px', bottom: '500px', left: '500px', zIndex: 201 }}>
+      <div id="editor" spellCheck={false} style={{ position: 'absolute', width: '200px', height: '200px', bottom: '300px', left: '500px', zIndex: 201 }}>
         <ReactQuill
           ref={(el) => {
             this.reactQuillRef = el;
@@ -92,4 +92,4 @@ class MemoEditor extends Component {
   }
 }
 
-export default MemoEditor;
+export default QuillEditor;
