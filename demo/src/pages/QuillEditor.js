@@ -22,70 +22,11 @@ class QuillEditor extends Component {
     const input = tooltip.root.querySelector('input[data-link]');
     input.dataset.link = 'https://www.example.com';
 
-    class CustomLink extends Quill.import('formats/link') {
-      static sanitize(url) {
-        if (!/^(https|http?:\/\/)/.test(url)) {
-          return `https://${ url }`;
-        }
-
-        return super.sanitize(url);
-      }
-
-      static create(value) {
-        let node = super.create(value);
-
-        node.removeAttribute('rel');
-
-        return node;
-      }
-    }
-    Quill.register(CustomLink);
+    Quill.register('formats/link', CustomLink);
 
     const Italic = Quill.import('formats/italic');
     Italic.tagName = 'i';
-    Quill.register(Italic);
-
-    const Clipboard = quill.getModule('clipboard');
-    // Clipboard.DEFAULTS.matchVisual = false;
-
-    const Delta = Quill.import('delta');
-
-    Clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
-      const plainText = node.innerText;
-      console.log('??')
-      return new Delta().insert(plainText);
-    })
-
-    // quill.keyboard.addBinding(
-    //   {
-    //     key: 'B',
-    //     ctrlKey: true
-    //   },
-    //   {},
-    //   (range, context) => {
-    //     console.log('hi?')
-    //     quill.format('bold', !context.format['bold']);
-    //     return false;
-    //   }
-    // );
-
-    // quill.keyboard.addBinding(
-    //   {
-    //     key: 'U',
-    //     ctrlKey: true
-    //   },
-    //   (range, context) => {
-    //     quill.format('underline', !context.format['underline']);
-    //     return false;
-    //   }
-    // );
-
-    
-
-    quill.clipboard.addMatcher('B', function(node, delta) {
-      console.log('dd')
-      return delta.compose(new Delta().retain(delta.length(), { bold: true }));
-    });
+    Quill.register('formats/italic', Italic);
 
     this.reactQuillRef.focus();
   }
@@ -128,20 +69,8 @@ class QuillEditor extends Component {
           modules={{
             toolbar: ['bold', 'italic', 'underline', 'link'],
             clipboard: {
-              // 이벤트 핸들러를 사용하여 붙여넣기한 내용을 처리
               matchers: [
-                ['p.MsoListParagraphCxSpFirst', function(node, delta) {
-                  // MS Word에서 리스트의 첫 번째 항목 처리
-                  return delta;
-                }],
-                ['p.MsoListParagraphCxSpMiddle', function(node, delta) {
-                  // MS Word에서 리스트의 중간 항목 처리
-                  return delta;
-                }],
-                ['p.MsoListParagraphCxSpLast', function(node, delta) {
-                  // MS Word에서 리스트의 마지막 항목 처리
-                  return delta;
-                }]
+                [ 'p.MsoListParagraph', preserveSizeFormat ]
               ]
             }
           }}
@@ -153,6 +82,56 @@ class QuillEditor extends Component {
       </div>
     );
   }
+}
+
+class CustomLink extends Quill.import('formats/link') {
+  static sanitize(url) {
+    if (!/^(https|http?:\/\/)/.test(url)) {
+      return `https://${url}`;
+    }
+
+    return super.sanitize(url);
+  }
+
+  static create(value) {
+    let node = super.create(value);
+
+    node.removeAttribute('rel');
+
+    return node;
+  }
+}
+
+function preserveSizeFormat(node, delta) {
+  const Delta = Quill.import('delta');
+  let ops = delta.ops.map((op) => Object.assign({}, op));
+
+  let bulletOp = ops.find((op) => op.insert && op.insert.trim().length);
+
+  if (!bulletOp) { return delta; }
+
+  bulletOp.insert = bulletOp.insert.trimLeft();
+  let listPrefix = bulletOp.insert.match(/^.*(^·|\.)/) || bulletOp.insert[0];
+  bulletOp.insert = bulletOp.insert.substring(listPrefix[0].length, bulletOp.insert.length).trimLeft();
+
+  let last = ops[ops.length - 1];
+  last.insert = last.insert.substring(0, last.insert.length - 1);
+
+  let listType = listPrefix[0].length === 1 ? 'bullet' : 'ordered';
+
+  let style = node.getAttribute('style').replace(/\n+/g, '');
+  let levelMatch = style.match(/level(\d+)/);
+  let indent = levelMatch ? levelMatch[1] - 1 : 0;
+
+  ops.push({
+    insert: '\n',
+    attributes: {
+      list: listType,
+      indent
+    }
+  });
+
+  return new Delta(ops);
 }
 
 export default QuillEditor;
