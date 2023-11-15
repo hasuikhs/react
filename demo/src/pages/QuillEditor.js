@@ -28,6 +28,15 @@ class QuillEditor extends Component {
     Italic.tagName = 'i';
     Quill.register('formats/italic', Italic);
 
+    const uiTooltip = Quill.import('ui/tooltip');
+    console.log(uiTooltip);
+
+    const toolbar = Quill.import('modules/toolbar');
+    console.log(toolbar);
+
+    const bubble = Quill.import('themes/bubble');
+    console.log(bubble);
+
     this.reactQuillRef.focus();
   }
 
@@ -62,15 +71,13 @@ class QuillEditor extends Component {
         }}
       >
         <ReactQuill
-          ref={(el) => {
-            this.reactQuillRef = el;
-          }}
+          ref={el => this.reactQuillRef = el}
           theme={'bubble'}
           modules={{
             toolbar: ['bold', 'italic', 'underline', 'link'],
             clipboard: {
               matchers: [
-                [ 'p.MsoListParagraph', preserveSizeFormat ]
+                [ 'p.MsoListParagraph', transMsListFormat ]
               ]
             }
           }}
@@ -102,7 +109,7 @@ class CustomLink extends Quill.import('formats/link') {
   }
 }
 
-function preserveSizeFormat(node, delta) {
+function transMsListFormat(node, delta) {
   const Delta = Quill.import('delta');
   let ops = delta.ops.map((op) => Object.assign({}, op));
 
