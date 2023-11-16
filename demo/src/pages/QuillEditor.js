@@ -37,6 +37,9 @@ class QuillEditor extends Component {
     const bubble = Quill.import('themes/bubble');
     console.log(bubble);
 
+    const picker = Quill.import('ui/picker');
+    console.log(picker);
+
     this.reactQuillRef.focus();
   }
 
