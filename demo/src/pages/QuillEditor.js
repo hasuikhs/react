@@ -34,6 +34,28 @@ class QuillEditor extends Component {
     const toolbar = Quill.import('modules/toolbar');
     console.log(toolbar);
 
+    class CustomToolbar extends toolbar {
+      addhandler(format, handler) {
+        console.log('Custom toolbar');
+
+        return super.addhandler(format, handler);
+      }
+
+      attach(input) {
+        console.log('Custom attach', input);
+
+        return super.attach(input);
+      }
+
+      update(range) {
+        console.log('Custom update', range);
+
+        return super.update(range);
+      }
+    }
+
+    Quill.register('modules/toolar', CustomToolbar);
+
     const bubble = Quill.import('themes/bubble');
     console.log(bubble);
 
