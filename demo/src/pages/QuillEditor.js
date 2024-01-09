@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../redux/actions';
 import './memoEditor.scss';
 
 class QuillEditor extends Component {
@@ -17,6 +20,11 @@ class QuillEditor extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.showMemo())
+    setTimeout(() => {
+      console.log(this.props)
+    }, 2_000)
+
     const quill = this.reactQuillRef.getEditor();
     const tooltip = quill.theme.tooltip;
     const input = tooltip.root.querySelector('input[data-link]');
@@ -29,10 +37,8 @@ class QuillEditor extends Component {
     Quill.register('formats/italic', Italic);
 
     const uiTooltip = Quill.import('ui/tooltip');
-    console.log(uiTooltip);
 
     const toolbar = Quill.import('modules/toolbar');
-    console.log(toolbar);
 
     class CustomToolbar extends toolbar {
       addhandler(format, handler) {
@@ -57,10 +63,8 @@ class QuillEditor extends Component {
     Quill.register('modules/toolar', CustomToolbar);
 
     const bubble = Quill.import('themes/bubble');
-    console.log(bubble);
 
     const picker = Quill.import('ui/picker');
-    console.log(picker);
 
     this.reactQuillRef.focus();
   }
@@ -166,4 +170,8 @@ function transMsListFormat(node, delta) {
   return new Delta(ops);
 }
 
-export default QuillEditor;
+export default connect((state) => ({
+    isShow: state.isShow
+  }),
+  dispatch => bindActionCreators(actions, dispatch)
+)(QuillEditor);
