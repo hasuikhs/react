@@ -121,12 +121,12 @@ class QuillEditor extends Component {
               }}
             >
               <button className="corner-button top-left" style={{ position: 'absolute', top: 0, left: 0 }}>TL</button>
-              <button className="corner-button top-right" style={{ position: 'absolute', top: 0, right: 0 }}>TR</button>
               <button className="corner-button bottom-left" style={{ position: 'absolute', bottom: 0, left: 0 }}>BL</button>
               <button className="corner-button bottom-right" style={{ position: 'absolute', bottom:0, right: 0 }}>BR</button>
             </div>
           )
         }
+        <button className={ `corner-button top-right ${ isShowSetting ? 'moved' : '' }` }>TR</button>
         <ReactQuill
           ref={el => this.reactQuillRef = el}
           theme={'bubble'}

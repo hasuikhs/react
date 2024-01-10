@@ -57,4 +57,14 @@
       }
     }
   }
+
+}
+.corner-button.top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: right 0.5s ease;
+}
+.corner-button.top-right.moved {
+  right: 30px;
 }
