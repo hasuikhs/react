@@ -13,6 +13,7 @@ class QuillEditor extends Component {
     this.reactQuillRef = null;
     this.state = {
       editorHtml: '',
+      isShowSetting: false
     };
 
     this.timer = null;
@@ -76,6 +77,12 @@ class QuillEditor extends Component {
     });
   }
 
+  handleShowSetting() {
+    this.setState({
+      isShowSetting: !this.state.isShowSetting
+    })
+  }
+
   debounceFunc(value, delay) {
     if (this.timer) {
       clearTimeout(this.timer);
@@ -86,19 +93,40 @@ class QuillEditor extends Component {
   }
 
   render() {
+    const { isShowSetting } = this.state;
+
     return (
       <div
         id="editor"
         spellCheck={false}
         style={{
-          position: 'absolute',
-          width: '200px',
+          position: 'relative',
+          width: '220px',
           height: '200px',
-          bottom: '300px',
-          left: '500px',
           zIndex: 201,
         }}
+        onMouseEnter={this.handleShowSetting.bind(this)}
+        onMouseLeave={this.handleShowSetting.bind(this)}
       >
+        {
+          isShowSetting && (
+            <div
+              className="setting-group"
+              style={{
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                left: '0px',
+                top: '0px'
+              }}
+            >
+              <button className="corner-button top-left" style={{ position: 'absolute', top: 0, left: 0 }}>TL</button>
+              <button className="corner-button top-right" style={{ position: 'absolute', top: 0, right: 0 }}>TR</button>
+              <button className="corner-button bottom-left" style={{ position: 'absolute', bottom: 0, left: 0 }}>BL</button>
+              <button className="corner-button bottom-right" style={{ position: 'absolute', bottom:0, right: 0 }}>BR</button>
+            </div>
+          )
+        }
         <ReactQuill
           ref={el => this.reactQuillRef = el}
           theme={'bubble'}
