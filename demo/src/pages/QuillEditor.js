@@ -13,7 +13,8 @@ class QuillEditor extends Component {
     this.reactQuillRef = null;
     this.state = {
       editorHtml: '',
-      isShowSetting: false
+      isShowSetting: false,
+      isFocus: false
     };
 
     this.timer = null;
@@ -79,8 +80,26 @@ class QuillEditor extends Component {
 
   handleShowSetting() {
     this.setState({
-      isShowSetting: !this.state.isShowSetting
-    })
+      isShowSetting: true
+    });
+  }
+
+  handleHideSetting() {
+    this.setState({
+      isShowSetting: false
+    });
+  }
+
+  handleOnFocus() {
+    this.setState({
+      isFocus: true
+    });
+  }
+
+  handleOnBlur() {
+    this.setState({
+      isFocus: false
+    });
   }
 
   debounceFunc(value, delay) {
@@ -106,7 +125,14 @@ class QuillEditor extends Component {
           zIndex: 201,
         }}
         onMouseEnter={this.handleShowSetting.bind(this)}
-        onMouseLeave={this.handleShowSetting.bind(this)}
+        onFocus={this.handleOnFocus.bind(this)}
+        onBlur={() => {
+          this.handleHideSetting();
+          this.handleOnBlur();
+        }}
+        onMouseLeave={() => {
+          this.state.isFocus || this.handleHideSetting()
+        }}
       >
         {
           isShowSetting && (
@@ -121,6 +147,7 @@ class QuillEditor extends Component {
               }}
             >
               <button className="corner-button top-left" style={{ position: 'absolute', top: 0, left: 0 }}>TL</button>
+              <button className="corner-button top-right-new" style={{ position: 'absolute', top: 0, right: 0, transition: 'opacity 0.5s ease' }}>TR</button>
               <button className="corner-button bottom-left" style={{ position: 'absolute', bottom: 0, left: 0 }}>BL</button>
               <button className="corner-button bottom-right" style={{ position: 'absolute', bottom:0, right: 0 }}>BR</button>
             </div>
