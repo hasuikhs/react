@@ -134,25 +134,22 @@ class QuillEditor extends Component {
           this.state.isFocus || this.handleHideSetting()
         }}
       >
-        {
-          isShowSetting && (
-            <div
-              className="setting-group"
-              style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                left: '0px',
-                top: '0px'
-              }}
-            >
-              <button className="corner-button top-left" style={{ position: 'absolute', top: 0, left: 0 }}>TL</button>
-              <button className="corner-button top-right-new" style={{ position: 'absolute', top: 0, right: 0, transition: 'opacity 0.5s ease' }}>TR</button>
-              <button className="corner-button bottom-left" style={{ position: 'absolute', bottom: 0, left: 0 }}>BL</button>
-              <button className="corner-button bottom-right" style={{ position: 'absolute', bottom:0, right: 0 }}>BR</button>
-            </div>
-          )
-        }
+        <div
+          className={ `setting-group ${ isShowSetting ? 'visible' : '' }` }
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            left: '0px',
+            top: '0px'
+          }}
+        >
+          <button className="corner-button top-left" style={{ position: 'absolute', top: 0, left: 0 }}>TL</button>
+          <button className="corner-button top-right-new" style={{ position: 'absolute', top: 0, right: 0, transition: 'opacity 0.5s ease' }}>TR</button>
+          <button className="corner-button bottom-left" style={{ position: 'absolute', bottom: 0, left: 0 }}>BL</button>
+          <button className="corner-button bottom-right" style={{ position: 'absolute', bottom:0, right: 0 }}>BR</button>
+        </div>
+
         <button className={ `corner-button top-right ${ isShowSetting ? 'moved' : '' }` }>TR</button>
         <ReactQuill
           ref={el => this.reactQuillRef = el}

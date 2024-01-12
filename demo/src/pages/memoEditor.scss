@@ -59,6 +59,16 @@
   }
 
 }
+.setting-group {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.visible {
+  opacity: 1;
+}
+
+
 .corner-button.top-right {
   position: absolute;
   top: 0;
