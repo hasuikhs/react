@@ -11,6 +11,7 @@ const Resizer = lazy(() => import('./pages/Resizer'));
 const Search = lazy(() => import('./pages/Search'));
 const Window = lazy(() => import('./pages/Window'));
 const Quill = lazy(() => import('./pages/QuillEditor'));
+const Tab = lazy(() => import('./pages/Tab'));
 
 // webgl
 const Basic = lazy(() => import('./pages/WebGL/Basic'));
@@ -72,6 +73,11 @@ const routes = [
     path: '/quillEditor',
     name: 'QuillEditor',
     element: <QuillEditor />
+  },
+  {
+    path: '/tab',
+    name: 'Tab',
+    element: <Tab />
   },
   {
     path: '*',
