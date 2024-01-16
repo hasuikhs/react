@@ -114,6 +114,7 @@ class QuillEditor extends Component {
   render() {
     const { isShowSetting } = this.state;
 
+    // 에러 확인 스크롤 유지 안됨...
     return (
       <div
         id="editor"
@@ -121,7 +122,7 @@ class QuillEditor extends Component {
         style={{
           position: 'relative',
           width: '220px',
-          height: '200px',
+          // height: '200px',
           zIndex: 201,
         }}
         onMouseEnter={this.handleShowSetting.bind(this)}
