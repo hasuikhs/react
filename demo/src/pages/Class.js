@@ -56,6 +56,7 @@ class Class extends Component {
         <button onClick={this.handleClick}>bind test</button>
 
         <InfiniteScrollComponent />
+        <Dropdown />
       </>
     );
   }
@@ -132,6 +133,61 @@ class InfiniteScrollComponent extends Component {
         ))}
         {this.state.loading && <div>Loading...</div>}
         <div id="sentinel" /> {/* 감시할 요소 */}
+      </div>
+    );
+  }
+}
+
+const menuData = [
+  { title: 'first', child: [{ title: '1' }] },
+  { title: 'second' },
+];
+
+class Dropdown extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeIndexes: []
+    };
+  }
+
+  // 메뉴 아이템 클릭 핸들러
+  handleItemClick = (index) => {
+    const { activeIndexes } = this.state;
+    const currentIndexPosition = activeIndexes.indexOf(index);
+
+    if (currentIndexPosition > -1) {
+      this.setState({
+        activeIndexes: activeIndexes.filter((i) => i !== index)
+      });
+    } else {
+      this.setState({
+        activeIndexes: [...activeIndexes, index]
+      });
+    }
+  };
+
+  renderMenuItems = (items, depth = 0) => {
+    const { activeIndexes } = this.state;
+    return items.map((item, index) => {
+      const currentIndex = depth + '-' + index;
+      const isActive = activeIndexes.includes(currentIndex);
+
+      return (
+        <div key={currentIndex} style={{ marginLeft: depth * 20 }}>
+          <button onClick={() => this.handleItemClick(currentIndex)}>
+            {item.title}
+          </button>
+          {isActive && item.child && this.renderMenuItems(item.child, currentIndex)}
+        </div>
+      );
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        {this.renderMenuItems(menuData)}
       </div>
     );
   }
