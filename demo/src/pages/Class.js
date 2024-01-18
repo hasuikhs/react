@@ -57,6 +57,8 @@ class Class extends Component {
 
         <InfiniteScrollComponent />
         <Dropdown />
+        <Modal />
+        <DropdownMenu />
       </>
     );
   }
@@ -188,6 +190,109 @@ class Dropdown extends Component {
     return (
       <div>
         {this.renderMenuItems(menuData)}
+      </div>
+    );
+  }
+}
+
+class Modal extends Component {
+  constructor(props) {
+    super(props);
+    
+    // 모달의 내용을 관리하는 상태
+    this.state = {
+      content: '초기 내용'
+    };
+  }
+
+  // 내용을 업데이트하는 함수
+  updateContent = () => {
+    this.setState({ content: '내용이 변경되었습니다!' });
+  }
+
+  render() {
+    return (
+      <div style={{border: '1px solid black', padding: '20px'}}>
+        {/* 상태에 따라 내용을 보여줌 */}
+        <p>{this.state.content}</p>
+
+        {/* 버튼 클릭 시 updateContent 함수 호출 */}
+        <button onClick={this.updateContent}>내용 바꾸기</button>
+      </div>
+    );
+  }
+}
+
+class DropdownMenu extends Component {
+  constructor(props) {
+    super(props);
+
+    this.menuRef = null;
+    this.state = {
+      activeMenu: 'main',
+      menuHeight: null,
+    };
+  }
+
+  setMenuRef = el => {
+    this.menuRef = el;
+    this.calcHeight(el);
+  }
+
+  calcHeight = (el) => {
+    if (el) {
+      const height = el.offsetHeight;
+      this.setState({ menuHeight: height });
+    }
+  };
+
+  setActiveMenu = (menuName) => {
+    this.setState({ activeMenu: menuName }, () => {
+      if (this.menuRef) {
+        this.calcHeight(this.menuRef);
+      }
+    });
+  };
+
+  renderDropdownItem = (props) => {
+    return (
+      <a
+        href="#"
+        className="menu-item"
+        onClick={(e) => {
+          e.preventDefault();
+          props.goToMenu && this.setActiveMenu(props.goToMenu);
+        }}
+      >
+        <span className="icon-button">{props.leftIcon}</span>
+        {props.children}
+      </a>
+    );
+  };
+
+  render() {
+    const { activeMenu, menuHeight } = this.state;
+
+    return (
+      <div className="dropdown" style={{ height: menuHeight }}>
+        {activeMenu === 'main' && (
+          <div className="menu" ref={this.setMenuRef}>
+            {this.renderDropdownItem({ goToMenu: 'setting', children: 'go to secondary' })}
+            {this.renderDropdownItem({ children: 'My setting' })}
+          </div>
+        )}
+
+        {activeMenu === 'setting' && (
+          <div className="menu" ref={this.setMenuRef}>
+            {this.renderDropdownItem({ goToMenu: 'main', children: 'first' })}
+            {this.renderDropdownItem({ children: 'My setting' })}
+            {this.renderDropdownItem({ children: 'My setting' })}
+            {this.renderDropdownItem({ children: 'My setting' })}
+            {this.renderDropdownItem({ children: 'My setting' })}
+            {this.renderDropdownItem({ children: 'My setting' })}
+            {this.renderDropdownItem({ children: 'My setting' })}
+          </div>
+        )}
       </div>
     );
   }
