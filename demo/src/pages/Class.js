@@ -1,6 +1,8 @@
 import { Component } from "react";
 import QuillEditor from "./QuillEditor";
 
+import './class.scss';
+
 let timer = null;
 
 class Class extends Component {
@@ -50,7 +52,7 @@ class Class extends Component {
     return (
       <>
         <h1>class</h1>
-        <h2>count: {this.state.count}</h2>
+        {/* <h2>count: {this.state.count}</h2>
         <button onClick={() => this.setState({ delete: true })}>Delete</button>
         {this.state.delete ? <></> : <Target />}
         <button onClick={this.handleClick}>bind test</button>
@@ -58,7 +60,8 @@ class Class extends Component {
         <InfiniteScrollComponent />
         <Dropdown />
         <Modal />
-        <DropdownMenu />
+        <DropdownMenu /> */}
+        <ExpandableComponent />
       </>
     );
   }
@@ -293,6 +296,53 @@ class DropdownMenu extends Component {
             {this.renderDropdownItem({ children: 'My setting' })}
           </div>
         )}
+      </div>
+    );
+  }
+}
+
+class ExpandableComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { isFocused: false };
+    this.elementRef = null;
+  }
+
+  handleFocus = () => {
+    this.setState({ isFocused: true });
+  }
+
+  handleBlur = () => {
+    this.setState({ isFocused: false }, () => {
+      const element = this.elementRef;
+      const height = element.scrollHeight + "px";
+      element.style.height = height; // 현재 높이를 고정값으로 설정
+      // 애니메이션을 위한 reflow 강제
+      // element.offsetHeight;
+      element.style.height = "210px";
+    });
+  }
+
+  componentDidUpdate(_, prevState) {
+    const { isFocused } = this.state;
+    if (isFocused !== prevState.isFocused && isFocused) {
+      const element = this.elementRef;
+      // 포커스가 들어오면 높이를 auto로 설정
+      element.style.height = "auto";
+    }
+  }
+
+  render() {
+    const { isFocused } = this.state;
+    return (
+      <div
+        ref={el => this.elementRef = el}
+        className={`element-class ${isFocused ? 'expanded' : ''}`}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        contentEditable
+      >
+        { 'test' }
       </div>
     );
   }

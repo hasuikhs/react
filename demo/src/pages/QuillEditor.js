@@ -74,23 +74,24 @@ class QuillEditor extends Component {
   handleValue = (html) => {
     const { limitLength } = this.state;
     
-    let text = this.quill.getText();
-    const textLength = text.length > 1 ? text.length - 1 : 0;
-
-    if (textLength > limitLength) {
-
-      const startIndex = limitLength;
-      const deleteLength = textLength - limitLength;
-      this.quill.deleteText(startIndex, deleteLength);
-
-      this.quill.setSelection(startIndex, Quill.sources.SILENT);
-
-      text = this.quill.getText();
-    } else {
-      this.setState({ editorHtml: html });
+    if (this.quill) {
+      let text = this.quill.getText();
+      const textLength = text.length > 1 ? text.length - 1 : 0;
+  
+      if (textLength > limitLength) {
+  
+        const startIndex = limitLength;
+        const deleteLength = textLength - limitLength;
+        this.quill.deleteText(startIndex, deleteLength);
+  
+        this.quill.setSelection(startIndex, Quill.sources.SILENT);
+  
+        text = this.quill.getText();
+      } else {
+        this.setState({ editorHtml: html });
+      }
+      this.props.setEditorContent({ text: text, html });
     }
-
-    this.props.setEditorContent({ text: text, html });
   }
 
   handleShowSetting() {

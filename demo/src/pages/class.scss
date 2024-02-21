@@ -1,0 +1,12 @@
+.element-class {
+  transition: 0.5s ease-out;
+  min-height: 210px; /* 초기 높이 설정 */
+  overflow: hidden;
+  border: 1px solid black;
+  width: 400px;
+}
+
+.element-class.expanded {
+  height: auto;
+  min-height: 400px;
+}
