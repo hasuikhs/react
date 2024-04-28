@@ -317,8 +317,7 @@ class ExpandableComponent extends Component {
       const element = this.elementRef;
       const height = element.scrollHeight + "px";
       element.style.height = height; // 현재 높이를 고정값으로 설정
-      // 애니메이션을 위한 reflow 강제
-      // element.offsetHeight;
+
       element.style.height = "210px";
     });
   }

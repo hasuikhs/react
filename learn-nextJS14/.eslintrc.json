@@ -1,0 +1,19 @@
+{
+  "extends": "next",
+  "plugins": ["react"],
+  "rules": {
+    "semi": [2, "always"],
+		"react/jsx-uses-react": "error",
+		"react/jsx-uses-vars": "error",
+    "react/jsx-curly-spacing": [2, {"when": "always", "children": true}],
+		"no-unused-vars": "warn",
+		"quotes": "off",
+		"jsx-quotes": "off",
+		"object-curly-spacing": "warn",
+		"comma-dangle": "off",
+		"no-console": ["warn", { "allow": ["error", "warn", "info"] }],
+		"space-before-blocks": "error",
+		"space-before-function-paren": "off",
+		"indent": "off"
+  }
+}
