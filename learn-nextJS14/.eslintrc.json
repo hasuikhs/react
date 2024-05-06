@@ -9,7 +9,7 @@
 		"no-unused-vars": "warn",
 		"quotes": "off",
 		"jsx-quotes": "off",
-		"object-curly-spacing": "warn",
+		"object-curly-spacing": ["warn", "always"],
 		"comma-dangle": "off",
 		"no-console": ["warn", { "allow": ["error", "warn", "info"] }],
 		"space-before-blocks": "error",
