@@ -1,4 +1,3 @@
-// components/Counter.js
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import { decrement, increment, incrementByAmount } from '@/lib/redux/slices/counterSlice';
 import { RootState } from '@/lib/redux/store';

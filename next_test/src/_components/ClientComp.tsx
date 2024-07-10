@@ -2,6 +2,7 @@
 
 import StoreProvider from '@/lib/redux/StoreProvider';
 import Counter from './Counter';
+import CounterDisplay from './CounterDisplay';
 
 export default function ClientComp() {
   return (
@@ -15,6 +16,9 @@ export default function ClientComp() {
       Client Comp
       <StoreProvider>
         <Counter />
+      </StoreProvider>
+      <StoreProvider>
+        <CounterDisplay />
       </StoreProvider>
     </div>
   );

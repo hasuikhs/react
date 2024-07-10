@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import logger from 'redux-logger';
 import createRootReducer from './rootReducer';
 
 const setupStore = async () => {
@@ -6,6 +7,7 @@ const setupStore = async () => {
 
   return configureStore({
     reducer: rootReducer,
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger)
   });
 };
 
