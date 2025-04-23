@@ -7,7 +7,7 @@ export default async function ServerItemList() {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-3xl font-bold text-center my-8">서버 사이드 렌더링 예제</h1>
+      <h1 className="text-3xl font-bold text-center text-white dark:text-black my-8">서버 사이드 렌더링 예제</h1>
       <Suspense fallback={<div className="text-center">로딩 중...</div>}>
         <ItemList initialData={initialData} />
       </Suspense>

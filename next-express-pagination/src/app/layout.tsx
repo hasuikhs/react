@@ -1,3 +1,5 @@
+import { Navbar } from '@/components/Navbar';
+import { ThemeProvider } from '@/context/ThemeContext';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -17,9 +19,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <main className="min-h-screen bg-gray-50">
-          {children}
-        </main>
+        <ThemeProvider>
+          <Navbar />
+          <main className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-16">
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );
